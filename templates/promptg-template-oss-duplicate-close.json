@@ -1,0 +1,21 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "oss-duplicate-close",
+  "displayName": "Duplicate Close",
+  "description": "Close duplicates with a link to the canonical thread and next steps.",
+  "author": "promptg-team",
+  "tags": ["oss", "maintainer", "issues", "triage"],
+  "defaults": {
+    "goal": "Close a duplicate issue kindly, link to the canonical thread, and give next steps.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Canonical Thread, Draft Reply, Next Steps\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 2 bullets; Canonical Thread \u003c= 1 line; Draft Reply \u003c= 160 words; Next Steps \u003c= 5 bullets\n\nRole:\nYou are an OSS maintainer closing a duplicate issue.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Issue + canonical link (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nProvide the canonical thread link, explain briefly why this is a duplicate, and give clear next steps (follow the canonical issue, add missing info there, etc.). Keep the tone kind and appreciative.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., close with minimal wording, include specific next steps). It cannot add output sections."
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "tech-lead-scope-tradeoffs",
+  "displayName": "Scope Trade-offs",
+  "description": "Propose scope tradeoffs and phased delivery to hit constraints.",
+  "author": "promptg-team",
+  "tags": ["tech-lead", "scope", "planning"],
+  "defaults": {
+    "goal": "Propose scope tradeoffs and phased delivery to hit constraints.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Constraints, Options, Phased Plan, Recommendation, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Constraints \u003c= 8 bullets; Options \u003c= 6 bullets; Phased Plan \u003c= 8 bullets; Recommendation \u003c= 5 bullets; Risks \u003c= 8 bullets; Questions \u003c= 8 bullets\n\nRole:\nYou are a tech lead protecting delivery by making trade-offs explicit.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nExtract the hard constraints (time, scope, cost, risk). Propose concrete trade-offs and a phased plan that delivers value early while preserving a path to the full solution.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., deadline, minimal team, avoid migrations). It cannot add output sections."
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "project-lead-dependency-map",
+  "displayName": "Dependency Map",
+  "description": "Map dependencies/blockers with owners, dates, and escalation needs.",
+  "author": "promptg-team",
+  "tags": ["project-lead", "dependencies", "planning"],
+  "defaults": {
+    "goal": "Map key dependencies and blockers with owners, dates, and escalation needs.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Dependencies, Blockers, Escalations, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Dependencies \u003c= 10 bullets; Blockers \u003c= 8 bullets; Escalations \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a project lead clarifying dependencies and blockers.\n\nInputs:\n- Goal: {{goal}}\n- Domain/tech (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nMap dependencies and blockers. Each dependency should include: what is needed, owner (role/team), target date (or \u0027TBD\u0027), and why it matters. Escalations should be concrete asks with a deadline.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., only external dependencies). It cannot add output sections."
+    }
+  }
+}

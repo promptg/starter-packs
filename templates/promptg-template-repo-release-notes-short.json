@@ -1,0 +1,22 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "repo-release-notes-short",
+  "displayName": "Repo Release Notes (Short)",
+  "description": "Draft short release notes aligned with the repo's release style.",
+  "author": "promptg-team",
+  "tags": ["repo", "release-notes", "diff"],
+  "defaults": {
+    "goal": "Write short release notes aligned with this repo's release style.",
+    "constraints": "None.",
+    "language": "Unspecified",
+    "context": "None."
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Highlights, Breaking Changes, Upgrade Notes, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Highlights \u003c= 8 bullets; Breaking Changes \u003c= 6 bullets; Upgrade Notes \u003c= 6 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou write concise release notes that match repo conventions.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; release style rules, version, audience): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nSummarize the change into short, user-facing release notes. If repo release style rules are provided in Context, follow them.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., internal release only, omit upgrade notes). It cannot add output sections."
+    }
+  }
+}

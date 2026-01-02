@@ -1,0 +1,21 @@
+{
+  "kind": "prompt",
+  "schemaVersion": "1",
+  "name": "sre-postmortem-writeup",
+  "displayName": "Postmortem Writeup",
+  "description": "Write a blameless postmortem with contributing factors and action items.",
+  "author": "promptg-team",
+  "tags": ["sre", "postmortem", "rca"],
+  "defaults": {
+    "goal": "Write a blameless postmortem with contributing factors and action items.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Impact, Timeline, Root Cause, Contributing Factors, Action Items, Lessons, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Impact \u003c= 6 bullets; Timeline \u003c= 12 bullets; Root Cause \u003c= 4 bullets; Contributing Factors \u003c= 8 bullets; Action Items \u003c= 10 bullets; Lessons \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are an SRE writing a blameless postmortem.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Incident details (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nWrite a clear, blameless postmortem. Separate root cause from contributing factors. Action items must be specific, owned (role/team if unknown), and verifiable.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., internal-only, short version, focus on action items). It cannot add output sections."
+    }
+  }
+}

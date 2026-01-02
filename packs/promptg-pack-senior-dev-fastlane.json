@@ -1,0 +1,234 @@
+{
+  "$schema": "https://promptg.io/schemas/v1/pack.schema.json",
+  "kind": "pack",
+  "schemaVersion": "1",
+  "name": "senior-dev-fastlane",
+  "version": "0.1.0",
+  "displayName": "Senior Dev: Fastlane",
+  "description": "High-signal prompts for senior engineers that prioritize correctness/security/maintainability risk and keep output short and decision-oriented.",
+  "author": "promptg-team",
+  "tags": ["senior", "developer", "review", "risk", "performance", "architecture", "semver"],
+  "templates": [
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "senior-pr-review-fastlane",
+      "displayName": "PR Review (Fastlane)",
+      "description": "Fast PR review: top risks, severity-ranked findings, and minimal fixes.",
+      "author": "promptg-team",
+      "tags": ["senior", "review", "diff", "pr"],
+      "defaults": {
+        "goal": "Review the PR quickly: top risks, severity-ranked findings, and minimal fixes.",
+        "constraints": "None.",
+        "language": "Unspecified",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Severity-Ranked Findings, Minimal Fixes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Severity-Ranked Findings \u003c= 8 bullets; Minimal Fixes \u003c= 8 bullets; Questions \u003c= 5 bullets\n\nRole:\nYou are a senior engineer doing a high-signal PR review.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nReview the diff with a bias toward correctness, security, and maintainability risk. Rank findings by severity (Critical/High/Medium/Low) and propose minimal, concrete fixes.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., security-only, no refactors, keep it ultra short). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "senior-risk-scan",
+      "displayName": "Risk Scan",
+      "description": "Identify correctness, security, and operability risks quickly and concretely.",
+      "author": "promptg-team",
+      "tags": ["senior", "risk", "diff"],
+      "defaults": {
+        "goal": "Identify correctness, security, and operability risks quickly and concretely.",
+        "constraints": "None.",
+        "language": "Unspecified",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Risks, Mitigations, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Risks \u003c= 10 bullets; Mitigations \u003c= 8 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a senior engineer scanning for risk.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nIdentify risks quickly and concretely. In Risks, prefix each bullet with a category tag like [Correctness], [Security], or [Operability], and include 1-line evidence/why it matters. In Mitigations, map mitigations to the highest risks first.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., operability-only, focus on runtime failures). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "senior-breaking-change-check",
+      "displayName": "Breaking Change Check",
+      "description": "Assess compatibility impact and recommend semver classification and comms.",
+      "author": "promptg-team",
+      "tags": ["senior", "semver", "compatibility", "diff"],
+      "defaults": {
+        "goal": "Assess compatibility impact and recommend semver classification and communication.",
+        "constraints": "None.",
+        "language": "Unspecified",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Semver Classification, Compatibility Risks, Recommendation, Communication Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Semver Classification \u003c= 4 bullets; Compatibility Risks \u003c= 8 bullets; Recommendation \u003c= 5 bullets; Communication Notes \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a senior engineer assessing compatibility impact.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; API contract, deprecation policy, release constraints): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nAssess whether the change is breaking and recommend a semver classification (patch/minor/major). Call out who/what breaks, how to mitigate, and what to communicate to users.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., public API only, CLI flags only). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "senior-refactor-plan",
+      "displayName": "Refactor Plan",
+      "description": "Plan a safe refactor with sequencing, guardrails, and rollback strategy.",
+      "author": "promptg-team",
+      "tags": ["senior", "refactor", "code"],
+      "defaults": {
+        "goal": "Plan a safe refactor with sequencing, guardrails, and rollback strategy.",
+        "constraints": "None.",
+        "language": "Unspecified",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Refactor Steps, Guardrails, Rollback Plan, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Refactor Steps \u003c= 10 bullets; Guardrails \u003c= 8 bullets; Rollback Plan \u003c= 6 bullets; Risks \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a senior engineer planning a refactor.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Code (required): {{code}}\n- Context (optional; constraints, existing tests, rollout expectations): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nPropose an incremental refactor plan that preserves behavior unless the goal says otherwise. Keep steps reviewable, include safety checks, and define a practical rollback strategy.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., no public API changes, keep diffs small). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "senior-architecture-sanity-check",
+      "displayName": "Architecture Sanity Check",
+      "description": "Sanity check architecture for tradeoffs, failure modes, and maintainability.",
+      "author": "promptg-team",
+      "tags": ["senior", "architecture", "design"],
+      "defaults": {
+        "goal": "Sanity check the architecture for tradeoffs, failure modes, and maintainability.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Trade-offs, Failure Modes, Maintainability, Recommendations, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Trade-offs \u003c= 8 bullets; Failure Modes \u003c= 8 bullets; Maintainability \u003c= 6 bullets; Recommendations \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a senior engineer reviewing an architecture proposal.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Architecture context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nSanity check the proposal: identify key trade-offs, likely failure modes, and long-term maintenance risks. Provide concrete recommendations and open questions that block approval.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., focus on operability, focus on data integrity). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "senior-performance-quickscan",
+      "displayName": "Performance Quickscan",
+      "description": "Spot performance risks and suggest what to measure and optimize.",
+      "author": "promptg-team",
+      "tags": ["senior", "performance", "diff"],
+      "defaults": {
+        "goal": "Spot performance risks and suggest what to measure and optimize.",
+        "constraints": "None.",
+        "language": "Unspecified",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Likely Hotspots, Measurement Plan, Optimizations, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Likely Hotspots \u003c= 8 bullets; Measurement Plan \u003c= 8 bullets; Optimizations \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a senior engineer scanning for performance regressions.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; workloads, latency budgets, perf goals): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nIdentify likely performance hotspots (CPU/memory/IO/DB/network) introduced or made worse by the diff. Suggest a concrete measurement plan and targeted optimizations.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., DB-only, memory-only, suggest measurement only). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "senior-api-contract-review",
+      "displayName": "API Contract Review",
+      "description": "Review API changes for compatibility, ergonomics, and edge cases.",
+      "author": "promptg-team",
+      "tags": ["senior", "api", "diff", "compatibility"],
+      "defaults": {
+        "goal": "Review API changes for compatibility, ergonomics, and edge cases.",
+        "constraints": "None.",
+        "language": "Unspecified",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Contract Changes, Compatibility, Edge Cases, Recommendations, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Contract Changes \u003c= 8 bullets; Compatibility \u003c= 8 bullets; Edge Cases \u003c= 8 bullets; Recommendations \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a senior engineer reviewing an API change.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; API docs, expected behavior, migration notes): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nReview the API contract surface and behavior changes. Call out compatibility breaks, ambiguous semantics, and edge cases. Recommend improvements that preserve intent and reduce long-term maintenance cost.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., backward compatibility only, public surface only). It cannot add output sections."
+        }
+      }
+    }
+  ],
+  "prompts": [
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "senior-pr-review-fastlane",
+      "displayName": "PR Review (Fastlane)",
+      "description": "Fast PR review: top risks, severity-ranked findings, and minimal fixes.",
+      "author": "promptg-team",
+      "tags": ["senior", "review", "diff", "pr"],
+      "defaults": {
+        "goal": "Review the PR quickly: top risks, severity-ranked findings, and minimal fixes.",
+        "constraints": "None.",
+        "language": "Unspecified",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Severity-Ranked Findings, Minimal Fixes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Severity-Ranked Findings \u003c= 8 bullets; Minimal Fixes \u003c= 8 bullets; Questions \u003c= 5 bullets\n\nRole:\nYou are a senior engineer doing a high-signal PR review.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nReview the diff with a bias toward correctness, security, and maintainability risk. Rank findings by severity (Critical/High/Medium/Low) and propose minimal, concrete fixes.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., security-only, no refactors, keep it ultra short). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "senior-risk-scan",
+      "displayName": "Risk Scan",
+      "description": "Identify correctness, security, and operability risks quickly and concretely.",
+      "author": "promptg-team",
+      "tags": ["senior", "risk", "diff"],
+      "defaults": {
+        "goal": "Identify correctness, security, and operability risks quickly and concretely.",
+        "constraints": "None.",
+        "language": "Unspecified",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Risks, Mitigations, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Risks \u003c= 10 bullets; Mitigations \u003c= 8 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a senior engineer scanning for risk.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nIdentify risks quickly and concretely. In Risks, prefix each bullet with a category tag like [Correctness], [Security], or [Operability], and include 1-line evidence/why it matters. In Mitigations, map mitigations to the highest risks first.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., operability-only, focus on runtime failures). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "senior-breaking-change-check",
+      "displayName": "Breaking Change Check",
+      "description": "Assess compatibility impact and recommend semver classification and comms.",
+      "author": "promptg-team",
+      "tags": ["senior", "semver", "compatibility", "diff"],
+      "defaults": {
+        "goal": "Assess compatibility impact and recommend semver classification and communication.",
+        "constraints": "None.",
+        "language": "Unspecified",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Semver Classification, Compatibility Risks, Recommendation, Communication Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Semver Classification \u003c= 4 bullets; Compatibility Risks \u003c= 8 bullets; Recommendation \u003c= 5 bullets; Communication Notes \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a senior engineer assessing compatibility impact.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; API contract, deprecation policy, release constraints): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nAssess whether the change is breaking and recommend a semver classification (patch/minor/major). Call out who/what breaks, how to mitigate, and what to communicate to users.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., public API only, CLI flags only). It cannot add output sections."
+        }
+      }
+    }
+  ]
+}

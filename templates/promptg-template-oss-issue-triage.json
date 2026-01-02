@@ -1,0 +1,21 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "oss-issue-triage",
+  "displayName": "Issue Triage",
+  "description": "Triage issues: classify, request missing info, and propose next steps.",
+  "author": "promptg-team",
+  "tags": ["oss", "maintainer", "triage", "issues"],
+  "defaults": {
+    "goal": "Triage the issue: classify it, identify missing info, and propose next steps.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Classification, Missing Info, Next Steps, Draft Reply\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Classification \u003c= 4 bullets; Missing Info \u003c= 6 bullets; Next Steps \u003c= 6 bullets; Draft Reply \u003c= 180 words\n\nRole:\nYou are an OSS maintainer triaging an issue with limited time.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Issue text (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nClassify the issue (bug/feature/question/docs/support/etc.), identify what information is missing, and propose actionable next steps. Draft a kind, concise maintainer reply that sets expectations and asks for the minimum needed to proceed.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., keep reply very short, ask for specific repro details). It cannot add output sections."
+    }
+  }
+}

@@ -1,0 +1,36 @@
+name: Validate Starter Packs
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout starter-packs
+        uses: actions/checkout@v4
+
+      - name: Checkout PromptG spec (schemas)
+        uses: actions/checkout@v4
+        with:
+          repository: promptg/spec
+          ref: main
+          path: _spec
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install validation dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Validate JSON assets
+        env:
+          PROMPTG_SCHEMA_DIR: ${{ github.workspace }}/_spec/schemas/v1
+        run: npm run validate

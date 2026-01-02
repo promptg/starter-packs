@@ -1,0 +1,21 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "project-lead-risk-register",
+  "displayName": "Risk Register",
+  "description": "Risk register with likelihood, impact, mitigation, owner, and due date.",
+  "author": "promptg-team",
+  "tags": ["project-lead", "risk"],
+  "defaults": {
+    "goal": "Create or update a practical project risk register with owners and due dates.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Risk Register, Next Steps, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Risk Register \u003c= 10 bullets; Next Steps \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a project lead maintaining a risk register.\n\nInputs:\n- Goal: {{goal}}\n- Domain/tech (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Project context / current risks (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCreate a risk register. Each risk bullet must include: Likelihood (Low/Med/High), Impact (Low/Med/High), Mitigation, Owner (role/team if unknown), and Due date (or \u0027TBD\u0027).",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., top 5 risks only, delivery risks only). It cannot add output sections."
+    }
+  }
+}

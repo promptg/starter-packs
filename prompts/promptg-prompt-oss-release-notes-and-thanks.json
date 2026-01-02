@@ -1,0 +1,21 @@
+{
+  "kind": "prompt",
+  "schemaVersion": "1",
+  "name": "oss-release-notes-and-thanks",
+  "displayName": "Release Notes \u0026 Thanks",
+  "description": "Write release notes highlighting changes and thanking contributors.",
+  "author": "promptg-team",
+  "tags": ["oss", "maintainer", "release-notes", "communication"],
+  "defaults": {
+    "goal": "Write short release notes that highlight changes and thank contributors.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Highlights, Notable Changes, Thanks, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Highlights \u003c= 6 bullets; Notable Changes \u003c= 10 bullets; Thanks \u003c= 8 bullets; Notes \u003c= 5 bullets\n\nRole:\nYou are an OSS maintainer writing release notes for humans.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Changes + contributors (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTurn the provided changes into a short, user-facing release note. Call out the most important improvements first. Thank contributors (by handle/name if provided).",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., only user-facing highlights, omit internal refactors). It cannot add output sections."
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "sre-runbook-draft",
+  "displayName": "Runbook Draft",
+  "description": "Draft or improve a runbook: symptoms, checks, mitigations, and escalation.",
+  "author": "promptg-team",
+  "tags": ["sre", "runbook", "operations"],
+  "defaults": {
+    "goal": "Draft or improve a runbook with symptoms, checks, mitigations, and escalation.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Symptoms, Immediate Checks, Mitigations, Escalation, Verification, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Symptoms \u003c= 6 bullets; Immediate Checks \u003c= 10 bullets; Mitigations \u003c= 10 bullets; Escalation \u003c= 6 bullets; Verification \u003c= 6 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou are an SRE writing a practical runbook.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nDraft or improve a runbook that an on-call engineer can follow under stress. Steps must be specific and safe. Prefer checks before mitigations, and include clear escalation guidance.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., AWS-only, Kubernetes-only, keep it short). It cannot add output sections."
+    }
+  }
+}

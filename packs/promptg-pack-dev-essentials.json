@@ -1,0 +1,278 @@
+{
+  "$schema": "https://promptg.io/schemas/v1/pack.schema.json",
+  "kind": "pack",
+  "schemaVersion": "1",
+  "name": "dev-essentials",
+  "version": "0.1.0",
+  "displayName": "Dev Essentials",
+  "description": "Compact, general-purpose prompts for daily development work: reviews, PR writing, commit messages, tests, basic security checks, and release notes.",
+  "author": "promptg-team",
+  "tags": ["starter", "developer", "workflow", "review", "testing", "security", "release-notes"],
+  "templates": [
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "dev-pr-review",
+      "displayName": "PR Review",
+      "description": "Review a PR diff for correctness, security, and maintainability; output top risks and fixes.",
+      "author": "promptg-team",
+      "tags": ["review", "diff", "pr"],
+      "defaults": {
+        "language": "Unspecified",
+        "goal": "Review the change for correctness, security, and maintainability.",
+        "constraints": "None.",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Top Risks, Suggested Fixes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Top Risks \u003c= 8 bullets; Suggested Fixes \u003c= 8 bullets; Questions \u003c= 5 bullets\n\nRole:\nYou are a careful, practical PR reviewer.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nReview the diff for correctness, security, and maintainability. Prioritize high-impact issues and propose concrete fixes.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., focus on security, keep it shorter). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "dev-code-review",
+      "displayName": "Code Review",
+      "description": "Review a code snippet/file (no diff) for bugs, clarity, and maintainability.",
+      "author": "promptg-team",
+      "tags": ["review", "code"],
+      "defaults": {
+        "language": "Unspecified",
+        "goal": "Review the code for bugs, clarity, and maintainability.",
+        "constraints": "None.",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Issues, Improvements, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Issues \u003c= 8 bullets; Improvements \u003c= 8 bullets; Questions \u003c= 5 bullets\n\nRole:\nYou are a careful, practical code reviewer.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Code (required): {{code}}\n- Context (optional): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nReview the code for correctness, readability, and maintainability. Prefer actionable, concrete suggestions grounded in the provided code/context.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., focus on performance, avoid refactors). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "dev-commit-message",
+      "displayName": "Commit Message",
+      "description": "Draft a conventional commit message from intent and/or diff context.",
+      "author": "promptg-team",
+      "tags": ["git", "commit", "diff"],
+      "defaults": {
+        "language": "Unspecified",
+        "goal": "Draft a conventional commit message that would make sense in `git log`.",
+        "constraints": "None.",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Subject, Body, Footers, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Subject is 1 line \u003c= 72 chars; Body \u003c= 6 lines; Footers \u003c= 4 lines; Notes \u003c= 4 bullets\n\nRole:\nYou write clear, conventional commit messages.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; intent, scope, ticket links): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nInfer intent from the diff (and optional context) and produce a conventional commit message. Use an imperative subject; include a brief body only when it adds clarity.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., keep it very short, include ticket refs). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "dev-bug-fix-plan",
+      "displayName": "Bug Fix Plan",
+      "description": "Turn a bug report into investigation steps, hypotheses, and a safe fix plan.",
+      "author": "promptg-team",
+      "tags": ["debugging", "planning"],
+      "defaults": {
+        "language": "Unspecified",
+        "goal": "Create an investigation and fix plan that is safe, incremental, and testable.",
+        "constraints": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Hypotheses, Investigation Steps, Fix Plan, Verification, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Hypotheses \u003c= 5 bullets; Investigation Steps \u003c= 8 bullets; Fix Plan \u003c= 8 bullets; Verification \u003c= 6 bullets; Questions \u003c= 5 bullets\n\nRole:\nYou are a pragmatic engineer debugging a bug safely.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Bug report / symptoms (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTurn the bug report into a practical plan: likely causes, what to check first, a minimal safe fix, and how to verify it without regressions.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., only suggest reversible steps). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "dev-feature-plan",
+      "displayName": "Feature Plan",
+      "description": "Turn a feature request into scope, approach, tasks, and risks.",
+      "author": "promptg-team",
+      "tags": ["planning", "feature"],
+      "defaults": {
+        "language": "Unspecified",
+        "goal": "Turn the request into an implementable plan with clear scope and risks.",
+        "constraints": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Scope, Approach, Tasks, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Scope \u003c= 8 bullets; Approach \u003c= 8 bullets; Tasks \u003c= 12 bullets; Risks \u003c= 8 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a pragmatic engineer turning requests into shippable work.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Feature request (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTurn the request into a concrete plan: define scope/non-scope, propose an approach, list tasks in a sensible order, and call out key risks and open questions.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., MVP only, no new dependencies). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "dev-test-plan",
+      "displayName": "Test Plan",
+      "description": "Create a risk-based test plan with prioritized cases and coverage notes.",
+      "author": "promptg-team",
+      "tags": ["testing", "qa", "planning"],
+      "defaults": {
+        "language": "Unspecified",
+        "goal": "Create a risk-based test plan with prioritized cases and coverage notes.",
+        "constraints": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Prioritized Test Cases, Coverage Notes, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Prioritized Test Cases \u003c= 12 bullets; Coverage Notes \u003c= 8 bullets; Risks \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a pragmatic engineer writing a risk-based test plan.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Change description (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCreate a test plan. In \"Prioritized Test Cases\", label each case as P0/P1/P2 and include expected results. In \"Coverage Notes\", call out what is not covered and why.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., only smoke tests, focus on regressions). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "dev-test-generation",
+      "displayName": "Test Generation",
+      "description": "Generate unit tests from code and desired behaviors, including edge cases.",
+      "author": "promptg-team",
+      "tags": ["testing", "unit-tests", "code"],
+      "defaults": {
+        "language": "Unspecified",
+        "goal": "Generate a small set of high-value unit tests, including edge cases.",
+        "constraints": "None.",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Assumptions, Test Cases, Test Code, Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Test Cases \u003c= 6 bullets; Test Code \u003c= ~150 lines; Notes \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou generate high-signal unit tests.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Code under test (required): {{code}}\n- Context (optional; behaviors, existing framework, test style): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nGenerate unit tests that match the apparent ecosystem (framework/style). If the framework is unclear, pick a reasonable default for the language and state it in Assumptions. Prefer fewer, higher-value tests over exhaustive coverage.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., only edge cases, avoid mocks). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "dev-security-scan",
+      "displayName": "Security Scan",
+      "description": "Scan code or diffs for security issues; report severity and mitigations.",
+      "author": "promptg-team",
+      "tags": ["security", "review"],
+      "defaults": {
+        "language": "Unspecified",
+        "goal": "Scan for likely security issues and recommend practical mitigations.",
+        "constraints": "None.",
+        "diff": "None.",
+        "code": "None.",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Findings, Mitigations, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Findings \u003c= 8 bullets; Mitigations \u003c= 8 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a pragmatic security reviewer focused on risk reduction.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (optional; provide exactly one of Diff or Code): {{diff}}\n- Code (optional; provide exactly one of Diff or Code): {{code}}\n- Context (optional): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nReview the provided input for security issues. In Findings, prefix each bullet with a severity tag like [Critical], [High], [Medium], or [Low], and include a short, concrete mitigation.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., only auth issues, only injection risks). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "dev-release-notes-short",
+      "displayName": "Release Notes (Short)",
+      "description": "Summarize changes into short release notes with user-facing highlights.",
+      "author": "promptg-team",
+      "tags": ["release-notes", "summary", "diff"],
+      "defaults": {
+        "language": "Unspecified",
+        "goal": "Write short, user-facing release notes with highlights and upgrade notes.",
+        "constraints": "None.",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Highlights, Breaking Changes, Upgrade Notes, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Highlights \u003c= 8 bullets; Breaking Changes \u003c= 6 bullets; Upgrade Notes \u003c= 6 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou write concise, user-facing release notes.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; product framing, version, audience): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nSummarize the change into short release notes. Focus on what users will notice and what they should do; avoid internal implementation details unless they affect behavior.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., internal release notes only, omit upgrade notes). It cannot add output sections."
+        }
+      }
+    }
+  ],
+  "prompts": [
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "dev-pr-review",
+      "displayName": "PR Review",
+      "description": "Review a PR diff for correctness, security, and maintainability; output top risks and fixes.",
+      "author": "promptg-team",
+      "tags": ["review", "diff", "pr"],
+      "defaults": {
+        "language": "Unspecified",
+        "goal": "Review the change for correctness, security, and maintainability.",
+        "constraints": "None.",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Top Risks, Suggested Fixes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Top Risks \u003c= 8 bullets; Suggested Fixes \u003c= 8 bullets; Questions \u003c= 5 bullets\n\nRole:\nYou are a careful, practical PR reviewer.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nReview the diff for correctness, security, and maintainability. Prioritize high-impact issues and propose concrete fixes.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., focus on security, keep it shorter). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "dev-commit-message",
+      "displayName": "Commit Message",
+      "description": "Draft a conventional commit message from intent and/or diff context.",
+      "author": "promptg-team",
+      "tags": ["git", "commit", "diff"],
+      "defaults": {
+        "language": "Unspecified",
+        "goal": "Draft a conventional commit message that would make sense in `git log`.",
+        "constraints": "None.",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Subject, Body, Footers, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Subject is 1 line \u003c= 72 chars; Body \u003c= 6 lines; Footers \u003c= 4 lines; Notes \u003c= 4 bullets\n\nRole:\nYou write clear, conventional commit messages.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; intent, scope, ticket links): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nInfer intent from the diff (and optional context) and produce a conventional commit message. Use an imperative subject; include a brief body only when it adds clarity.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., keep it very short, include ticket refs). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "dev-test-generation",
+      "displayName": "Test Generation",
+      "description": "Generate unit tests from code and desired behaviors, including edge cases.",
+      "author": "promptg-team",
+      "tags": ["testing", "unit-tests", "code"],
+      "defaults": {
+        "language": "Unspecified",
+        "goal": "Generate a small set of high-value unit tests, including edge cases.",
+        "constraints": "None.",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Assumptions, Test Cases, Test Code, Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Test Cases \u003c= 6 bullets; Test Code \u003c= ~150 lines; Notes \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou generate high-signal unit tests.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Code under test (required): {{code}}\n- Context (optional; behaviors, existing framework, test style): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nGenerate unit tests that match the apparent ecosystem (framework/style). If the framework is unclear, pick a reasonable default for the language and state it in Assumptions. Prefer fewer, higher-value tests over exhaustive coverage.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., only edge cases, avoid mocks). It cannot add output sections."
+        }
+      }
+    }
+  ]
+}

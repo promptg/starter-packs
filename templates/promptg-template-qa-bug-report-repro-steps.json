@@ -1,0 +1,21 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "qa-bug-report-repro-steps",
+  "displayName": "Bug Report (Repro Steps)",
+  "description": "Write a bug report with clear repro steps and environment details.",
+  "author": "promptg-team",
+  "tags": ["qa", "bug-report", "triage"],
+  "defaults": {
+    "goal": "Write a clear bug report with reproducible steps and environment details.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Title, Summary, Environment, Steps To Reproduce, Expected, Actual, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Title \u003c= 1 line; Summary \u003c= 3 bullets; Environment \u003c= 6 bullets; Steps To Reproduce \u003c= 10 bullets; Expected \u003c= 4 bullets; Actual \u003c= 4 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou are a QA engineer writing a high-quality bug report.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Raw bug info (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTurn the raw info into a bug report that an engineer can reproduce quickly. Prefer concrete steps and observable outcomes. If key details are missing, call them out in Notes.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., keep it short, include severity label). It cannot add output sections."
+    }
+  }
+}

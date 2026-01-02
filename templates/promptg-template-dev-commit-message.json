@@ -1,0 +1,22 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "dev-commit-message",
+  "displayName": "Commit Message",
+  "description": "Draft a conventional commit message from intent and/or diff context.",
+  "author": "promptg-team",
+  "tags": ["git", "commit", "diff"],
+  "defaults": {
+    "language": "Unspecified",
+    "goal": "Draft a conventional commit message that would make sense in `git log`.",
+    "constraints": "None.",
+    "context": "None."
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Subject, Body, Footers, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Subject is 1 line \u003c= 72 chars; Body \u003c= 6 lines; Footers \u003c= 4 lines; Notes \u003c= 4 bullets\n\nRole:\nYou write clear, conventional commit messages.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; intent, scope, ticket links): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nInfer intent from the diff (and optional context) and produce a conventional commit message. Use an imperative subject; include a brief body only when it adds clarity.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., keep it very short, include ticket refs). It cannot add output sections."
+    }
+  }
+}

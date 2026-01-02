@@ -1,0 +1,21 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "dev-feature-plan",
+  "displayName": "Feature Plan",
+  "description": "Turn a feature request into scope, approach, tasks, and risks.",
+  "author": "promptg-team",
+  "tags": ["planning", "feature"],
+  "defaults": {
+    "language": "Unspecified",
+    "goal": "Turn the request into an implementable plan with clear scope and risks.",
+    "constraints": "None."
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Scope, Approach, Tasks, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Scope \u003c= 8 bullets; Approach \u003c= 8 bullets; Tasks \u003c= 12 bullets; Risks \u003c= 8 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a pragmatic engineer turning requests into shippable work.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Feature request (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTurn the request into a concrete plan: define scope/non-scope, propose an approach, list tasks in a sensible order, and call out key risks and open questions.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., MVP only, no new dependencies). It cannot add output sections."
+    }
+  }
+}

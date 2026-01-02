@@ -1,0 +1,21 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "sre-status-update",
+  "displayName": "Status Update",
+  "description": "Draft stakeholder updates suitable for active incidents and outages.",
+  "author": "promptg-team",
+  "tags": ["sre", "incident", "communication"],
+  "defaults": {
+    "goal": "Draft a stakeholder update suitable for an active incident or outage.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Current Status, Impact, ETA/Next Update, Risks/Unknowns, Asks\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Current Status \u003c= 6 bullets; Impact \u003c= 6 bullets; ETA/Next Update \u003c= 3 bullets; Risks/Unknowns \u003c= 6 bullets; Asks \u003c= 5 bullets\n\nRole:\nYou are an SRE writing stakeholder updates during an incident.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Incident context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nWrite a clear update that distinguishes current facts from unknowns. Avoid speculative ETAs; if timing is unclear, state when the next update will be provided.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., customer-facing, internal-only, no ETA). It cannot add output sections."
+    }
+  }
+}

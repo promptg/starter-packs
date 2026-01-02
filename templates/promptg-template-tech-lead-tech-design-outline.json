@@ -1,0 +1,21 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "tech-lead-tech-design-outline",
+  "displayName": "Tech Design Outline",
+  "description": "Draft a technical design with options, tradeoffs, and open questions.",
+  "author": "promptg-team",
+  "tags": ["tech-lead", "design", "architecture"],
+  "defaults": {
+    "goal": "Draft a technical design outline with options, tradeoffs, and open questions.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Options, Recommended Approach, Trade-offs, Open Questions, Next Steps\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 5 bullets; Options \u003c= 3 options; Recommended Approach \u003c= 8 bullets; Trade-offs \u003c= 10 bullets; Open Questions \u003c= 8 bullets; Next Steps \u003c= 6 bullets\n\nRole:\nYou are a tech lead drafting a decision-oriented technical design.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Design context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nProvide 2-3 realistic options, compare them on key criteria, and recommend one. Make assumptions explicit and surface open questions that block execution.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., cost cap, latency target, compliance). It cannot add output sections."
+    }
+  }
+}

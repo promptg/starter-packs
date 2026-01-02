@@ -1,0 +1,22 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "repo-commit-message",
+  "displayName": "Repo Commit Message",
+  "description": "Draft commit messages that match the repo's conventions and scope style.",
+  "author": "promptg-team",
+  "tags": ["repo", "git", "commit", "diff"],
+  "defaults": {
+    "goal": "Draft a commit message that matches this repo's conventions and scope style.",
+    "constraints": "None.",
+    "language": "Unspecified",
+    "context": "None."
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Subject, Body, Footers, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Subject is 1 line \u003c= 72 chars; Body \u003c= 6 lines; Footers \u003c= 4 lines; Notes \u003c= 4 bullets\n\nRole:\nYou write commit messages that match repo conventions.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; repo commit style rules, ticket refs, intent): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nInfer intent from the diff and produce a commit message that fits the repo's conventions. Use context to match scope/type rules when provided.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., include ticket refs, keep it very short). It cannot add output sections."
+    }
+  }
+}

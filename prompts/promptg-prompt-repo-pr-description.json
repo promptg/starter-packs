@@ -1,0 +1,22 @@
+{
+  "kind": "prompt",
+  "schemaVersion": "1",
+  "name": "repo-pr-description",
+  "displayName": "Repo PR Description",
+  "description": "Produce a PR description in the repo's expected format (what/why/how/testing/risk).",
+  "author": "promptg-team",
+  "tags": ["repo", "pr", "docs", "diff"],
+  "defaults": {
+    "goal": "Write a PR description in this repo's expected format.",
+    "constraints": "None.",
+    "language": "Unspecified",
+    "context": "None."
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, What Changed, Why, How To Test, Risks, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; What Changed \u003c= 8 bullets; Why \u003c= 6 bullets; How To Test \u003c= 10 bullets; Risks \u003c= 6 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou write PR descriptions that match the repository's conventions.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; repo PR template, standards, tickets, rollout notes): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nProduce a reviewer-friendly PR description. If repo-specific format rules are provided in Context, follow them; otherwise use a reasonable default aligned with the section headings.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., focus on rollout/testing, keep it shorter). It cannot add output sections."
+    }
+  }
+}

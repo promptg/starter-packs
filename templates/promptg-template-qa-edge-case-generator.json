@@ -1,0 +1,21 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "qa-edge-case-generator",
+  "displayName": "Edge Case Generator",
+  "description": "Generate edge and negative test cases for a feature or change.",
+  "author": "promptg-team",
+  "tags": ["qa", "testing", "edge-cases"],
+  "defaults": {
+    "goal": "Generate edge and negative test cases for the described feature/change.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Edge Cases, Negative Cases, Data/State Variations, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Edge Cases \u003c= 10 bullets; Negative Cases \u003c= 10 bullets; Data/State Variations \u003c= 8 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou are a QA engineer hunting for edge cases.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Feature/change description (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nGenerate test ideas that are concrete and reproducible. Focus on boundary conditions, invalid inputs, state transitions, concurrency/timing, permissions, and error handling relevant to the described change.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., focus on auth flows, only edge cases around dates/timezones). It cannot add output sections."
+    }
+  }
+}

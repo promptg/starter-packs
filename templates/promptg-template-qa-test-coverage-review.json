@@ -1,0 +1,21 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "qa-test-coverage-review",
+  "displayName": "Test Coverage Review",
+  "description": "Review existing tests and suggest the highest-value coverage gaps.",
+  "author": "promptg-team",
+  "tags": ["qa", "testing", "coverage"],
+  "defaults": {
+    "goal": "Review existing tests and suggest the highest-value coverage gaps.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Existing Coverage Signals, Gaps, High-Value Additions, Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Existing Coverage Signals \u003c= 6 bullets; Gaps \u003c= 8 bullets; High-Value Additions \u003c= 8 bullets; Notes \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a QA engineer reviewing test coverage pragmatically.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Tests/codebase context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nBased on the provided context, identify the highest-risk gaps and propose the smallest set of high-value tests to add first. Prefer tests that prevent regressions on critical flows.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., unit tests only, only critical path). It cannot add output sections."
+    }
+  }
+}

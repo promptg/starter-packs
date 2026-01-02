@@ -1,0 +1,21 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "tech-lead-feature-brief",
+  "displayName": "Feature Brief",
+  "description": "Turn requirements into a brief with scope, non-goals, and acceptance criteria.",
+  "author": "promptg-team",
+  "tags": ["tech-lead", "planning", "requirements"],
+  "defaults": {
+    "goal": "Turn the requirements into a brief with scope, non-goals, and acceptance criteria.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Scope, Non-Goals, Acceptance Criteria, Risks, Questions, Next Steps\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 5 bullets; Scope \u003c= 8 bullets; Non-Goals \u003c= 8 bullets; Acceptance Criteria \u003c= 10 bullets; Risks \u003c= 8 bullets; Questions \u003c= 8 bullets; Next Steps \u003c= 6 bullets\n\nRole:\nYou are a tech lead turning requirements into a ship-ready brief.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Requirements / context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nMake scope boundaries crisp and testable. Write acceptance criteria as concrete, verifiable statements. Prefer a plan that supports iteration and de-risks early.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., 2-week deadline, no new services). It cannot add output sections."
+    }
+  }
+}

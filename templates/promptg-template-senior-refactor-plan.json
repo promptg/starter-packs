@@ -1,0 +1,22 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "senior-refactor-plan",
+  "displayName": "Refactor Plan",
+  "description": "Plan a safe refactor with sequencing, guardrails, and rollback strategy.",
+  "author": "promptg-team",
+  "tags": ["senior", "refactor", "code"],
+  "defaults": {
+    "goal": "Plan a safe refactor with sequencing, guardrails, and rollback strategy.",
+    "constraints": "None.",
+    "language": "Unspecified",
+    "context": "None."
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Refactor Steps, Guardrails, Rollback Plan, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Refactor Steps \u003c= 10 bullets; Guardrails \u003c= 8 bullets; Rollback Plan \u003c= 6 bullets; Risks \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a senior engineer planning a refactor.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Code (required): {{code}}\n- Context (optional; constraints, existing tests, rollout expectations): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nPropose an incremental refactor plan that preserves behavior unless the goal says otherwise. Keep steps reviewable, include safety checks, and define a practical rollback strategy.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., no public API changes, keep diffs small). It cannot add output sections."
+    }
+  }
+}

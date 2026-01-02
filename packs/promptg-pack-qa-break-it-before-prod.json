@@ -1,0 +1,225 @@
+{
+  "$schema": "https://promptg.io/schemas/v1/pack.schema.json",
+  "kind": "pack",
+  "schemaVersion": "1",
+  "name": "qa-break-it-before-prod",
+  "version": "0.1.0",
+  "displayName": "QA: Break It Before Prod",
+  "description": "QA-focused prompts for risk-based testing: test plans, edge cases, regression checklists, and release smoke guidance.",
+  "author": "promptg-team",
+  "tags": ["starter", "qa", "testing", "checklists", "release"],
+  "templates": [
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "qa-risk-based-test-plan",
+      "displayName": "Risk-Based Test Plan",
+      "description": "Build a risk-based test plan with priority ordering and coverage rationale.",
+      "author": "promptg-team",
+      "tags": ["qa", "testing", "planning"],
+      "defaults": {
+        "goal": "Build a risk-based test plan with priority ordering and coverage rationale.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Risk Assessment, Test Plan, Coverage Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Risk Assessment \u003c= 8 bullets; Test Plan \u003c= 12 bullets; Coverage Notes \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a QA engineer building a high-signal, risk-based test plan.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Change description (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCreate a risk-based test plan. Prioritize tests that reduce the highest customer and regression risk first. Include brief rationale in Risk Assessment (what could break and why).",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., manual-only, mobile-only, smoke tests only). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "qa-edge-case-generator",
+      "displayName": "Edge Case Generator",
+      "description": "Generate edge and negative test cases for a feature or change.",
+      "author": "promptg-team",
+      "tags": ["qa", "testing", "edge-cases"],
+      "defaults": {
+        "goal": "Generate edge and negative test cases for the described feature/change.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Edge Cases, Negative Cases, Data/State Variations, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Edge Cases \u003c= 10 bullets; Negative Cases \u003c= 10 bullets; Data/State Variations \u003c= 8 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou are a QA engineer hunting for edge cases.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Feature/change description (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nGenerate test ideas that are concrete and reproducible. Focus on boundary conditions, invalid inputs, state transitions, concurrency/timing, permissions, and error handling relevant to the described change.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., focus on auth flows, only edge cases around dates/timezones). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "qa-regression-checklist",
+      "displayName": "Regression Checklist",
+      "description": "Create a regression checklist based on what the change touches.",
+      "author": "promptg-team",
+      "tags": ["qa", "testing", "regression"],
+      "defaults": {
+        "goal": "Create a regression checklist based on what the change touches.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Areas To Recheck, Checklist, Automation Candidates, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Areas To Recheck \u003c= 8 bullets; Checklist \u003c= 12 bullets; Automation Candidates \u003c= 6 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou are a QA engineer building a pragmatic regression checklist.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Change details (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nBased on what the change touches, produce a checklist of the most likely regressions. Make checklist items actionable (what to do + expected outcome). Identify the highest-value automation candidates.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., only top 10 checks, focus on critical flows). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "qa-bug-report-repro-steps",
+      "displayName": "Bug Report (Repro Steps)",
+      "description": "Write a bug report with clear repro steps and environment details.",
+      "author": "promptg-team",
+      "tags": ["qa", "bug-report", "triage"],
+      "defaults": {
+        "goal": "Write a clear bug report with reproducible steps and environment details.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Title, Summary, Environment, Steps To Reproduce, Expected, Actual, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Title \u003c= 1 line; Summary \u003c= 3 bullets; Environment \u003c= 6 bullets; Steps To Reproduce \u003c= 10 bullets; Expected \u003c= 4 bullets; Actual \u003c= 4 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou are a QA engineer writing a high-quality bug report.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Raw bug info (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTurn the raw info into a bug report that an engineer can reproduce quickly. Prefer concrete steps and observable outcomes. If key details are missing, call them out in Notes.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., keep it short, include severity label). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "qa-release-smoke-suite",
+      "displayName": "Release Smoke Suite",
+      "description": "Draft a release smoke suite covering critical user journeys.",
+      "author": "promptg-team",
+      "tags": ["qa", "release", "smoke-tests"],
+      "defaults": {
+        "goal": "Draft a release smoke suite covering critical user journeys.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Critical Journeys, Smoke Checks, Rollback/Recovery Checks, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Critical Journeys \u003c= 8 bullets; Smoke Checks \u003c= 12 bullets; Rollback/Recovery Checks \u003c= 6 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou are a QA engineer preparing a release smoke suite.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Release/change context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nDraft a smoke suite that catches the highest-impact failures quickly. Focus on critical user journeys, core integrations, and obvious data integrity/permission risks relevant to the release.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., 15-minute smoke only, mobile-only). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "qa-test-coverage-review",
+      "displayName": "Test Coverage Review",
+      "description": "Review existing tests and suggest the highest-value coverage gaps.",
+      "author": "promptg-team",
+      "tags": ["qa", "testing", "coverage"],
+      "defaults": {
+        "goal": "Review existing tests and suggest the highest-value coverage gaps.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Existing Coverage Signals, Gaps, High-Value Additions, Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Existing Coverage Signals \u003c= 6 bullets; Gaps \u003c= 8 bullets; High-Value Additions \u003c= 8 bullets; Notes \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a QA engineer reviewing test coverage pragmatically.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Tests/codebase context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nBased on the provided context, identify the highest-risk gaps and propose the smallest set of high-value tests to add first. Prefer tests that prevent regressions on critical flows.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., unit tests only, only critical path). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "qa-flaky-test-triage",
+      "displayName": "Flaky Test Triage",
+      "description": "Triage flaky tests and propose fixes and stabilization steps.",
+      "author": "promptg-team",
+      "tags": ["qa", "testing", "flaky-tests"],
+      "defaults": {
+        "goal": "Triage flaky tests and propose fixes and stabilization steps.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Likely Causes, Investigation Steps, Stabilization Fixes, Long-Term Prevention, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Likely Causes \u003c= 6 bullets; Investigation Steps \u003c= 8 bullets; Stabilization Fixes \u003c= 8 bullets; Long-Term Prevention \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a QA engineer triaging flaky tests.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Flake details (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTriage the flake and propose a path to stabilization. Prefer fixes that reduce nondeterminism (time, concurrency, external dependencies) and improve observability (logs, retries with limits, better assertions).",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., propose quick mitigation only, no refactors). It cannot add output sections."
+        }
+      }
+    }
+  ],
+  "prompts": [
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "qa-risk-based-test-plan",
+      "displayName": "Risk-Based Test Plan",
+      "description": "Build a risk-based test plan with priority ordering and coverage rationale.",
+      "author": "promptg-team",
+      "tags": ["qa", "testing", "planning"],
+      "defaults": {
+        "goal": "Build a risk-based test plan with priority ordering and coverage rationale.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Risk Assessment, Test Plan, Coverage Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Risk Assessment \u003c= 8 bullets; Test Plan \u003c= 12 bullets; Coverage Notes \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a QA engineer building a high-signal, risk-based test plan.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Change description (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCreate a risk-based test plan. Prioritize tests that reduce the highest customer and regression risk first. Include brief rationale in Risk Assessment (what could break and why).",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., manual-only, mobile-only, smoke tests only). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "qa-regression-checklist",
+      "displayName": "Regression Checklist",
+      "description": "Create a regression checklist based on what the change touches.",
+      "author": "promptg-team",
+      "tags": ["qa", "testing", "regression"],
+      "defaults": {
+        "goal": "Create a regression checklist based on what the change touches.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Areas To Recheck, Checklist, Automation Candidates, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Areas To Recheck \u003c= 8 bullets; Checklist \u003c= 12 bullets; Automation Candidates \u003c= 6 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou are a QA engineer building a pragmatic regression checklist.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Change details (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nBased on what the change touches, produce a checklist of the most likely regressions. Make checklist items actionable (what to do + expected outcome). Identify the highest-value automation candidates.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., only top 10 checks, focus on critical flows). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "qa-release-smoke-suite",
+      "displayName": "Release Smoke Suite",
+      "description": "Draft a release smoke suite covering critical user journeys.",
+      "author": "promptg-team",
+      "tags": ["qa", "release", "smoke-tests"],
+      "defaults": {
+        "goal": "Draft a release smoke suite covering critical user journeys.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Critical Journeys, Smoke Checks, Rollback/Recovery Checks, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Critical Journeys \u003c= 8 bullets; Smoke Checks \u003c= 12 bullets; Rollback/Recovery Checks \u003c= 6 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou are a QA engineer preparing a release smoke suite.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Release/change context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nDraft a smoke suite that catches the highest-impact failures quickly. Focus on critical user journeys, core integrations, and obvious data integrity/permission risks relevant to the release.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., 15-minute smoke only, mobile-only). It cannot add output sections."
+        }
+      }
+    }
+  ]
+}
