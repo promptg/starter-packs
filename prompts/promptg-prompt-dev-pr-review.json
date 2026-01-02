@@ -1,0 +1,22 @@
+{
+  "kind": "prompt",
+  "schemaVersion": "1",
+  "name": "dev-pr-review",
+  "displayName": "PR Review",
+  "description": "Review a PR diff for correctness, security, and maintainability; output top risks and fixes.",
+  "author": "promptg-team",
+  "tags": ["review", "diff", "pr"],
+  "defaults": {
+    "language": "Unspecified",
+    "goal": "Review the change for correctness, security, and maintainability.",
+    "constraints": "None.",
+    "context": "None."
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Top Risks, Suggested Fixes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Top Risks \u003c= 8 bullets; Suggested Fixes \u003c= 8 bullets; Questions \u003c= 5 bullets\n\nRole:\nYou are a careful, practical PR reviewer.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nReview the diff for correctness, security, and maintainability. Prioritize high-impact issues and propose concrete fixes.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., focus on security, keep it shorter). It cannot add output sections."
+    }
+  }
+}

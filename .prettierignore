@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+*.log
+
+# Lock files (don't reformat these)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock

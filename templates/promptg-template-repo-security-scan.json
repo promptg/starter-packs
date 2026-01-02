@@ -1,0 +1,39 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "repo-security-scan",
+  "displayName": "Repo Security Scan",
+  "description": "Review repo changes for security risks, assumptions, and mitigations.",
+  "author": "promptg-team",
+  "tags": [
+    "repo",
+    "security",
+    "diff"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "repo-security-scan",
+    "displayName": "Repo Security Scan",
+    "description": "Review repo changes for security risks, assumptions, and mitigations.",
+    "author": "promptg-team",
+    "tags": [
+      "repo",
+      "security",
+      "diff"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Findings, Mitigations, Assumptions, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Findings <= 8 bullets; Mitigations <= 8 bullets; Assumptions <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are a pragmatic security reviewer for this repository.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; threat model, auth boundaries, data sensitivity): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nIdentify likely security issues in the change. In Findings, prefix each bullet with [Critical]/[High]/[Medium]/[Low] and include short evidence from the diff when possible. State any assumptions explicitly.",
+    "defaults": {
+      "goal": "Review the change for security risks and recommend practical mitigations.",
+      "constraints": "None.",
+      "language": "Unspecified",
+      "context": "None."
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., auth only, injection only). It cannot add output sections."
+      }
+    }
+  }
+}

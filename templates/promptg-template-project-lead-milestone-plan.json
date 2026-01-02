@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "project-lead-milestone-plan",
+  "displayName": "Milestone Plan",
+  "description": "Plan milestones with deliverables, dates, and dependencies.",
+  "author": "promptg-team",
+  "tags": [
+    "project-lead",
+    "milestones",
+    "planning"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "project-lead-milestone-plan",
+    "displayName": "Milestone Plan",
+    "description": "Plan milestones with deliverables, dates, and dependencies.",
+    "author": "promptg-team",
+    "tags": [
+      "project-lead",
+      "milestones",
+      "planning"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Milestones, Dependencies, Risks, Questions, Next Steps\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Milestones <= 10 bullets; Dependencies <= 8 bullets; Risks <= 6 bullets; Questions <= 6 bullets; Next Steps <= 6 bullets\n\nRole:\nYou are a project lead turning work into a milestone plan.\n\nInputs:\n- Goal: {{goal}}\n- Domain/tech (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCreate outcome-focused milestones. Each milestone should include a deliverable and a target date (or a relative date like Week 1/2). Call out dependencies and risks that could shift the timeline.",
+    "defaults": {
+      "goal": "Plan milestones with deliverables, dates, and dependencies.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., fixed launch date, no scope increase). It cannot add output sections."
+      }
+    }
+  }
+}

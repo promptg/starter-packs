@@ -1,0 +1,21 @@
+{
+  "kind": "prompt",
+  "schemaVersion": "1",
+  "name": "qa-regression-checklist",
+  "displayName": "Regression Checklist",
+  "description": "Create a regression checklist based on what the change touches.",
+  "author": "promptg-team",
+  "tags": ["qa", "testing", "regression"],
+  "defaults": {
+    "goal": "Create a regression checklist based on what the change touches.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Areas To Recheck, Checklist, Automation Candidates, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Areas To Recheck \u003c= 8 bullets; Checklist \u003c= 12 bullets; Automation Candidates \u003c= 6 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou are a QA engineer building a pragmatic regression checklist.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Change details (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nBased on what the change touches, produce a checklist of the most likely regressions. Make checklist items actionable (what to do + expected outcome). Identify the highest-value automation candidates.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., only top 10 checks, focus on critical flows). It cannot add output sections."
+    }
+  }
+}

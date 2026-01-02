@@ -1,0 +1,22 @@
+{
+  "kind": "prompt",
+  "schemaVersion": "1",
+  "name": "senior-breaking-change-check",
+  "displayName": "Breaking Change Check",
+  "description": "Assess compatibility impact and recommend semver classification and comms.",
+  "author": "promptg-team",
+  "tags": ["senior", "semver", "compatibility", "diff"],
+  "defaults": {
+    "goal": "Assess compatibility impact and recommend semver classification and communication.",
+    "constraints": "None.",
+    "language": "Unspecified",
+    "context": "None."
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Semver Classification, Compatibility Risks, Recommendation, Communication Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Semver Classification \u003c= 4 bullets; Compatibility Risks \u003c= 8 bullets; Recommendation \u003c= 5 bullets; Communication Notes \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a senior engineer assessing compatibility impact.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; API contract, deprecation policy, release constraints): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nAssess whether the change is breaking and recommend a semver classification (patch/minor/major). Call out who/what breaks, how to mitigate, and what to communicate to users.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., public API only, CLI flags only). It cannot add output sections."
+    }
+  }
+}

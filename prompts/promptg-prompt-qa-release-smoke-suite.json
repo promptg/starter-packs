@@ -1,0 +1,21 @@
+{
+  "kind": "prompt",
+  "schemaVersion": "1",
+  "name": "qa-release-smoke-suite",
+  "displayName": "Release Smoke Suite",
+  "description": "Draft a release smoke suite covering critical user journeys.",
+  "author": "promptg-team",
+  "tags": ["qa", "release", "smoke-tests"],
+  "defaults": {
+    "goal": "Draft a release smoke suite covering critical user journeys.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Critical Journeys, Smoke Checks, Rollback/Recovery Checks, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Critical Journeys \u003c= 8 bullets; Smoke Checks \u003c= 12 bullets; Rollback/Recovery Checks \u003c= 6 bullets; Notes \u003c= 6 bullets\n\nRole:\nYou are a QA engineer preparing a release smoke suite.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Release/change context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nDraft a smoke suite that catches the highest-impact failures quickly. Focus on critical user journeys, core integrations, and obvious data integrity/permission risks relevant to the release.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., 15-minute smoke only, mobile-only). It cannot add output sections."
+    }
+  }
+}

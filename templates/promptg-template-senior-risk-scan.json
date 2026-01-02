@@ -1,0 +1,39 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "senior-risk-scan",
+  "displayName": "Risk Scan",
+  "description": "Identify correctness, security, and operability risks quickly and concretely.",
+  "author": "promptg-team",
+  "tags": [
+    "senior",
+    "risk",
+    "diff"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "senior-risk-scan",
+    "displayName": "Risk Scan",
+    "description": "Identify correctness, security, and operability risks quickly and concretely.",
+    "author": "promptg-team",
+    "tags": [
+      "senior",
+      "risk",
+      "diff"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Risks, Mitigations, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Risks <= 10 bullets; Mitigations <= 8 bullets; Questions <= 6 bullets\n\nRole:\nYou are a senior engineer scanning for risk.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nIdentify risks quickly and concretely. In Risks, prefix each bullet with a category tag like [Correctness], [Security], or [Operability], and include 1-line evidence/why it matters. In Mitigations, map mitigations to the highest risks first.",
+    "defaults": {
+      "goal": "Identify correctness, security, and operability risks quickly and concretely.",
+      "constraints": "None.",
+      "language": "Unspecified",
+      "context": "None."
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., operability-only, focus on runtime failures). It cannot add output sections."
+      }
+    }
+  }
+}

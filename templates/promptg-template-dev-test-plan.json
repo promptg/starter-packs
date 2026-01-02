@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "dev-test-plan",
+  "displayName": "Test Plan",
+  "description": "Create a risk-based test plan with prioritized cases and coverage notes.",
+  "author": "promptg-team",
+  "tags": [
+    "testing",
+    "qa",
+    "planning"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "dev-test-plan",
+    "displayName": "Test Plan",
+    "description": "Create a risk-based test plan with prioritized cases and coverage notes.",
+    "author": "promptg-team",
+    "tags": [
+      "testing",
+      "qa",
+      "planning"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Prioritized Test Cases, Coverage Notes, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Prioritized Test Cases <= 12 bullets; Coverage Notes <= 8 bullets; Risks <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are a pragmatic engineer writing a risk-based test plan.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Change description (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCreate a test plan. In \"Prioritized Test Cases\", label each case as P0/P1/P2 and include expected results. In \"Coverage Notes\", call out what is not covered and why.",
+    "defaults": {
+      "language": "Unspecified",
+      "goal": "Create a risk-based test plan with prioritized cases and coverage notes.",
+      "constraints": "None."
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., only smoke tests, focus on regressions). It cannot add output sections."
+      }
+    }
+  }
+}

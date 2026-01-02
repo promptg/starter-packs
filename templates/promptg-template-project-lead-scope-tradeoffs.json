@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "project-lead-scope-tradeoffs",
+  "displayName": "Scope Trade-offs",
+  "description": "Summarize scope tradeoffs and recommend a path forward.",
+  "author": "promptg-team",
+  "tags": [
+    "project-lead",
+    "scope",
+    "decision"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "project-lead-scope-tradeoffs",
+    "displayName": "Scope Trade-offs",
+    "description": "Summarize scope tradeoffs and recommend a path forward.",
+    "author": "promptg-team",
+    "tags": [
+      "project-lead",
+      "scope",
+      "decision"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Options, Trade-offs, Recommendation, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Options <= 6 bullets; Trade-offs <= 10 bullets; Recommendation <= 5 bullets; Risks <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are a project lead helping the team make scope trade-offs.\n\nInputs:\n- Goal: {{goal}}\n- Domain/tech (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nSummarize the realistic options, the trade-offs, and recommend a path forward. Keep it decision-friendly for stakeholders.",
+    "defaults": {
+      "goal": "Summarize scope tradeoffs and recommend a path forward.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., must hit date, must reduce risk). It cannot add output sections."
+      }
+    }
+  }
+}

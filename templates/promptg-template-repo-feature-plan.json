@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "repo-feature-plan",
+  "displayName": "Repo Feature Plan",
+  "description": "Create a repo-appropriate feature plan including rollout and operational considerations.",
+  "author": "promptg-team",
+  "tags": [
+    "repo",
+    "planning",
+    "feature"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "repo-feature-plan",
+    "displayName": "Repo Feature Plan",
+    "description": "Create a repo-appropriate feature plan including rollout and operational considerations.",
+    "author": "promptg-team",
+    "tags": [
+      "repo",
+      "planning",
+      "feature"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Scope, Approach, Tasks, Rollout, Operational Considerations, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Scope <= 8 bullets; Approach <= 8 bullets; Tasks <= 12 bullets; Rollout <= 8 bullets; Operational Considerations <= 8 bullets; Risks <= 8 bullets; Questions <= 6 bullets\n\nRole:\nYou are planning work in this repository with an eye on operability.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Feature request / requirements (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTurn the request into an implementable plan tailored to this repo. Include rollout steps and operational concerns (monitoring, migration, failure modes) where relevant.",
+    "defaults": {
+      "goal": "Turn this feature request into a repo-appropriate plan, including rollout and operational considerations.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., MVP only, no schema changes). It cannot add output sections."
+      }
+    }
+  }
+}

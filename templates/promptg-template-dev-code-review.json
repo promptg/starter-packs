@@ -1,0 +1,37 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "dev-code-review",
+  "displayName": "Code Review",
+  "description": "Review a code snippet/file (no diff) for bugs, clarity, and maintainability.",
+  "author": "promptg-team",
+  "tags": [
+    "review",
+    "code"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "dev-code-review",
+    "displayName": "Code Review",
+    "description": "Review a code snippet/file (no diff) for bugs, clarity, and maintainability.",
+    "author": "promptg-team",
+    "tags": [
+      "review",
+      "code"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Issues, Improvements, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Issues <= 8 bullets; Improvements <= 8 bullets; Questions <= 5 bullets\n\nRole:\nYou are a careful, practical code reviewer.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Code (required): {{code}}\n- Context (optional): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nReview the code for correctness, readability, and maintainability. Prefer actionable, concrete suggestions grounded in the provided code/context.",
+    "defaults": {
+      "language": "Unspecified",
+      "goal": "Review the code for bugs, clarity, and maintainability.",
+      "constraints": "None.",
+      "context": "None."
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., focus on performance, avoid refactors). It cannot add output sections."
+      }
+    }
+  }
+}

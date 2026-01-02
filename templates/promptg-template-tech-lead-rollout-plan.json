@@ -1,0 +1,40 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "tech-lead-rollout-plan",
+  "displayName": "Rollout Plan",
+  "description": "Plan rollout and migration with observability, gating, and rollback.",
+  "author": "promptg-team",
+  "tags": [
+    "tech-lead",
+    "rollout",
+    "migration",
+    "operability"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "tech-lead-rollout-plan",
+    "displayName": "Rollout Plan",
+    "description": "Plan rollout and migration with observability, gating, and rollback.",
+    "author": "promptg-team",
+    "tags": [
+      "tech-lead",
+      "rollout",
+      "migration",
+      "operability"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Rollout Steps, Observability, Gating, Rollback, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Rollout Steps <= 10 bullets; Observability <= 8 bullets; Gating <= 8 bullets; Rollback <= 8 bullets; Risks <= 8 bullets; Questions <= 8 bullets\n\nRole:\nYou are a tech lead planning a safe rollout.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Change context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nPlan a rollout that reduces blast radius: include observability, gating criteria, and a practical rollback. Make unknowns explicit and turn them into questions or tasks.",
+    "defaults": {
+      "goal": "Plan rollout and migration with observability, gating, and rollback.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., no downtime, phased rollout, feature flag required). It cannot add output sections."
+      }
+    }
+  }
+}

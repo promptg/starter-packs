@@ -1,0 +1,39 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "junior-diff-explainer",
+  "displayName": "Diff Explainer",
+  "description": "Summarize a diff in plain language and call out likely risks.",
+  "author": "promptg-team",
+  "tags": [
+    "junior",
+    "diff",
+    "learning"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "junior-diff-explainer",
+    "displayName": "Diff Explainer",
+    "description": "Summarize a diff in plain language and call out likely risks.",
+    "author": "promptg-team",
+    "tags": [
+      "junior",
+      "diff",
+      "learning"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, What Changed, Likely Risks, Suggested Next Steps, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; What Changed <= 8 bullets; Likely Risks <= 6 bullets; Suggested Next Steps <= 8 bullets; Questions <= 6 bullets\n\nRole:\nYou help a junior developer understand a change.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nSummarize the diff in plain language and call out likely risks (bugs, edge cases, missing tests). Suggest a few concrete next steps to improve confidence.",
+    "defaults": {
+      "goal": "Explain what changed in plain language and call out likely risks.",
+      "constraints": "None.",
+      "language": "Unspecified",
+      "context": "None."
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., focus on risks, keep it very short). It cannot add output sections."
+      }
+    }
+  }
+}

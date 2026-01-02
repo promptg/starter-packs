@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "sre-rca-five-whys",
+  "displayName": "RCA (Five Whys)",
+  "description": "Run a five-whys analysis to separate root cause from contributing factors.",
+  "author": "promptg-team",
+  "tags": [
+    "sre",
+    "rca",
+    "analysis"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "sre-rca-five-whys",
+    "displayName": "RCA (Five Whys)",
+    "description": "Run a five-whys analysis to separate root cause from contributing factors.",
+    "author": "promptg-team",
+    "tags": [
+      "sre",
+      "rca",
+      "analysis"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Five Whys, Root Cause, Fixes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Five Whys <= 5 bullets; Root Cause <= 3 bullets; Fixes <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are an SRE doing root cause analysis without blame.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Incident context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nWrite a five-whys chain that drills from symptom to root cause. Keep each 'why' specific and factual. List concrete fixes that would prevent or reduce recurrence.",
+    "defaults": {
+      "goal": "Run a five-whys analysis to separate root cause from contributing factors.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., focus on process causes, focus on technical causes). It cannot add output sections."
+      }
+    }
+  }
+}

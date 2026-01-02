@@ -1,0 +1,36 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "security-threat-model-lite",
+  "displayName": "Threat Model (Lite)",
+  "description": "Create a lightweight threat model: assets, actors, entry points, mitigations.",
+  "author": "promptg-team",
+  "tags": [
+    "security",
+    "threat-modeling"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "security-threat-model-lite",
+    "displayName": "Threat Model (Lite)",
+    "description": "Create a lightweight threat model: assets, actors, entry points, mitigations.",
+    "author": "promptg-team",
+    "tags": [
+      "security",
+      "threat-modeling"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Assets, Actors, Entry Points, Threats, Mitigations, Open Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Assets <= 6 bullets; Actors <= 6 bullets; Entry Points <= 8 bullets; Threats <= 10 bullets; Mitigations <= 10 bullets; Open Questions <= 8 bullets\n\nRole:\nYou are a security champion doing quick, high-signal threat modeling.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- System/feature description (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nProduce a lightweight threat model. Focus on realistic threats and practical mitigations that reduce risk without boiling the ocean.",
+    "defaults": {
+      "goal": "Create a lightweight threat model with practical mitigations.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., focus on PII, assume public internet exposure). It cannot add output sections."
+      }
+    }
+  }
+}

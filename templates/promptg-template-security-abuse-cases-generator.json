@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "security-abuse-cases-generator",
+  "displayName": "Abuse Cases Generator",
+  "description": "Generate abuse cases and negative scenarios to test and defend against.",
+  "author": "promptg-team",
+  "tags": [
+    "security",
+    "abuse-cases",
+    "testing"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "security-abuse-cases-generator",
+    "displayName": "Abuse Cases Generator",
+    "description": "Generate abuse cases and negative scenarios to test and defend against.",
+    "author": "promptg-team",
+    "tags": [
+      "security",
+      "abuse-cases",
+      "testing"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Abuse Cases, Negative Scenarios To Test, Mitigations, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Abuse Cases <= 10 bullets; Negative Scenarios To Test <= 10 bullets; Mitigations <= 8 bullets; Questions <= 6 bullets\n\nRole:\nYou are a security champion generating realistic abuse cases.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Feature/system description (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nGenerate abuse cases that a motivated attacker or abusive user would try. For each abuse case, include a short negative test idea and at least one mitigation that is practical to implement.",
+    "defaults": {
+      "goal": "Generate realistic abuse cases and negative scenarios, plus mitigations.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., focus on account takeover, focus on rate limits). It cannot add output sections."
+      }
+    }
+  }
+}

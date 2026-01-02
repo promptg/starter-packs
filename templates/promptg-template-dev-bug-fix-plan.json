@@ -1,0 +1,36 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "dev-bug-fix-plan",
+  "displayName": "Bug Fix Plan",
+  "description": "Turn a bug report into investigation steps, hypotheses, and a safe fix plan.",
+  "author": "promptg-team",
+  "tags": [
+    "debugging",
+    "planning"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "dev-bug-fix-plan",
+    "displayName": "Bug Fix Plan",
+    "description": "Turn a bug report into investigation steps, hypotheses, and a safe fix plan.",
+    "author": "promptg-team",
+    "tags": [
+      "debugging",
+      "planning"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Hypotheses, Investigation Steps, Fix Plan, Verification, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Hypotheses <= 5 bullets; Investigation Steps <= 8 bullets; Fix Plan <= 8 bullets; Verification <= 6 bullets; Questions <= 5 bullets\n\nRole:\nYou are a pragmatic engineer debugging a bug safely.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Bug report / symptoms (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTurn the bug report into a practical plan: likely causes, what to check first, a minimal safe fix, and how to verify it without regressions.",
+    "defaults": {
+      "language": "Unspecified",
+      "goal": "Create an investigation and fix plan that is safe, incremental, and testable.",
+      "constraints": "None."
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., only suggest reversible steps). It cannot add output sections."
+      }
+    }
+  }
+}

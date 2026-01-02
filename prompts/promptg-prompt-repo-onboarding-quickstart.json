@@ -1,0 +1,21 @@
+{
+  "kind": "prompt",
+  "schemaVersion": "1",
+  "name": "repo-onboarding-quickstart",
+  "displayName": "Repo Onboarding Quickstart",
+  "description": "Generate a repo onboarding quickstart: setup, run, test, and contribute.",
+  "author": "promptg-team",
+  "tags": ["repo", "onboarding", "docs"],
+  "defaults": {
+    "goal": "Create a repo onboarding quickstart that a new contributor can follow.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Setup, Run, Test, Contribute, Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Setup \u003c= 10 bullets; Run \u003c= 8 bullets; Test \u003c= 8 bullets; Contribute \u003c= 8 bullets; Notes \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are writing repo-specific onboarding for new contributors.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Repo context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nUse the repo context (README snippets, setup notes, scripts, conventions) to produce a quickstart that is concrete, sequential, and copy/paste-friendly where possible.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., assume macOS, keep it short). It cannot add output sections."
+    }
+  }
+}

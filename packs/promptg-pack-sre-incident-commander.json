@@ -1,0 +1,363 @@
+{
+  "$schema": "https://promptg.io/schemas/v1/pack.schema.json",
+  "kind": "pack",
+  "schemaVersion": "1",
+  "name": "sre-incident-commander",
+  "version": "1.0.0",
+  "displayName": "SRE: Incident Commander",
+  "description": "SRE-focused prompts for incident response and postmortems: timelines, impact summaries, contributing factors, and follow-up actions.",
+  "author": "promptg-team",
+  "tags": [
+    "starter",
+    "sre",
+    "incident-response",
+    "postmortem",
+    "runbooks",
+    "operations"
+  ],
+  "templates": [
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "sre-incident-brief",
+      "displayName": "Incident Brief",
+      "description": "Summarize incident impact, current status, and immediate next steps.",
+      "author": "promptg-team",
+      "tags": [
+        "sre",
+        "incident",
+        "communication"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "sre-incident-brief",
+        "displayName": "Incident Brief",
+        "description": "Summarize incident impact, current status, and immediate next steps.",
+        "author": "promptg-team",
+        "tags": [
+          "sre",
+          "incident",
+          "communication"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Impact, Current Status, Immediate Next Steps, Unknowns, Draft Update\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Impact <= 6 bullets; Current Status <= 6 bullets; Immediate Next Steps <= 8 bullets; Unknowns <= 6 bullets; Draft Update <= 180 words\n\nRole:\nYou are an SRE incident commander communicating clearly under pressure.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Raw incident details (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTurn the raw incident details into a clear brief. Prefer facts over speculation; separate what is known from unknowns. Draft a stakeholder-friendly update suitable for a status page or incident channel.",
+        "defaults": {
+          "goal": "Summarize incident impact, current status, and immediate next steps.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., exec-friendly, very short, no ETAs). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "sre-timeline-from-logs",
+      "displayName": "Timeline From Logs",
+      "description": "Build a timeline from logs/events and highlight gaps and hypotheses.",
+      "author": "promptg-team",
+      "tags": [
+        "sre",
+        "incident",
+        "timeline"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "sre-timeline-from-logs",
+        "displayName": "Timeline From Logs",
+        "description": "Build a timeline from logs/events and highlight gaps and hypotheses.",
+        "author": "promptg-team",
+        "tags": [
+          "sre",
+          "incident",
+          "timeline"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Timeline, Gaps, Hypotheses, Next Checks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Timeline <= 12 bullets; Gaps <= 8 bullets; Hypotheses <= 6 bullets; Next Checks <= 8 bullets; Questions <= 6 bullets\n\nRole:\nYou are an SRE building an incident timeline from noisy signals.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Logs/events/notes (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nExtract an ordered timeline with timestamps if available. Call out gaps in the data and propose plausible hypotheses. Recommend the next checks that would most quickly confirm or falsify the hypotheses.",
+        "defaults": {
+          "goal": "Build a timeline from logs/events and highlight gaps and hypotheses.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., last 60 minutes only, only customer-impacting events). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "sre-postmortem-writeup",
+      "displayName": "Postmortem Writeup",
+      "description": "Write a blameless postmortem with contributing factors and action items.",
+      "author": "promptg-team",
+      "tags": [
+        "sre",
+        "postmortem",
+        "rca"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "sre-postmortem-writeup",
+        "displayName": "Postmortem Writeup",
+        "description": "Write a blameless postmortem with contributing factors and action items.",
+        "author": "promptg-team",
+        "tags": [
+          "sre",
+          "postmortem",
+          "rca"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Impact, Timeline, Root Cause, Contributing Factors, Action Items, Lessons, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Impact <= 6 bullets; Timeline <= 12 bullets; Root Cause <= 4 bullets; Contributing Factors <= 8 bullets; Action Items <= 10 bullets; Lessons <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are an SRE writing a blameless postmortem.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Incident details (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nWrite a clear, blameless postmortem. Separate root cause from contributing factors. Action items must be specific, owned (role/team if unknown), and verifiable.",
+        "defaults": {
+          "goal": "Write a blameless postmortem with contributing factors and action items.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., internal-only, short version, focus on action items). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "sre-followups-and-owners",
+      "displayName": "Follow-ups & Owners",
+      "description": "Turn learnings into follow-ups with owners, priority, and due dates.",
+      "author": "promptg-team",
+      "tags": [
+        "sre",
+        "postmortem",
+        "follow-ups"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "sre-followups-and-owners",
+        "displayName": "Follow-ups & Owners",
+        "description": "Turn learnings into follow-ups with owners, priority, and due dates.",
+        "author": "promptg-team",
+        "tags": [
+          "sre",
+          "postmortem",
+          "follow-ups"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Follow-ups, Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Follow-ups <= 12 bullets; Notes <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are an SRE turning learnings into operational follow-ups.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Learnings/context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nProduce follow-ups where each bullet includes: Priority (P0/P1/P2), Owner (name/role/team), Due date (or 'TBD'), and Success criteria (how we know it's done).",
+        "defaults": {
+          "goal": "Turn learnings into follow-ups with owners, priority, and due dates.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., only top 5, only preventative work). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "sre-rca-five-whys",
+      "displayName": "RCA (Five Whys)",
+      "description": "Run a five-whys analysis to separate root cause from contributing factors.",
+      "author": "promptg-team",
+      "tags": [
+        "sre",
+        "rca",
+        "analysis"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "sre-rca-five-whys",
+        "displayName": "RCA (Five Whys)",
+        "description": "Run a five-whys analysis to separate root cause from contributing factors.",
+        "author": "promptg-team",
+        "tags": [
+          "sre",
+          "rca",
+          "analysis"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Five Whys, Root Cause, Fixes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Five Whys <= 5 bullets; Root Cause <= 3 bullets; Fixes <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are an SRE doing root cause analysis without blame.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Incident context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nWrite a five-whys chain that drills from symptom to root cause. Keep each 'why' specific and factual. List concrete fixes that would prevent or reduce recurrence.",
+        "defaults": {
+          "goal": "Run a five-whys analysis to separate root cause from contributing factors.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., focus on process causes, focus on technical causes). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "sre-status-update",
+      "displayName": "Status Update",
+      "description": "Draft stakeholder updates suitable for active incidents and outages.",
+      "author": "promptg-team",
+      "tags": [
+        "sre",
+        "incident",
+        "communication"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "sre-status-update",
+        "displayName": "Status Update",
+        "description": "Draft stakeholder updates suitable for active incidents and outages.",
+        "author": "promptg-team",
+        "tags": [
+          "sre",
+          "incident",
+          "communication"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Current Status, Impact, ETA/Next Update, Risks/Unknowns, Asks\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Current Status <= 6 bullets; Impact <= 6 bullets; ETA/Next Update <= 3 bullets; Risks/Unknowns <= 6 bullets; Asks <= 5 bullets\n\nRole:\nYou are an SRE writing stakeholder updates during an incident.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Incident context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nWrite a clear update that distinguishes current facts from unknowns. Avoid speculative ETAs; if timing is unclear, state when the next update will be provided.",
+        "defaults": {
+          "goal": "Draft a stakeholder update suitable for an active incident or outage.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., customer-facing, internal-only, no ETA). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "sre-runbook-draft",
+      "displayName": "Runbook Draft",
+      "description": "Draft or improve a runbook: symptoms, checks, mitigations, and escalation.",
+      "author": "promptg-team",
+      "tags": [
+        "sre",
+        "runbook",
+        "operations"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "sre-runbook-draft",
+        "displayName": "Runbook Draft",
+        "description": "Draft or improve a runbook: symptoms, checks, mitigations, and escalation.",
+        "author": "promptg-team",
+        "tags": [
+          "sre",
+          "runbook",
+          "operations"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Symptoms, Immediate Checks, Mitigations, Escalation, Verification, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Symptoms <= 6 bullets; Immediate Checks <= 10 bullets; Mitigations <= 10 bullets; Escalation <= 6 bullets; Verification <= 6 bullets; Notes <= 6 bullets\n\nRole:\nYou are an SRE writing a practical runbook.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nDraft or improve a runbook that an on-call engineer can follow under stress. Steps must be specific and safe. Prefer checks before mitigations, and include clear escalation guidance.",
+        "defaults": {
+          "goal": "Draft or improve a runbook with symptoms, checks, mitigations, and escalation.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., AWS-only, Kubernetes-only, keep it short). It cannot add output sections."
+          }
+        }
+      }
+    }
+  ],
+  "prompts": [
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "sre-incident-brief",
+      "displayName": "Incident Brief",
+      "description": "Summarize incident impact, current status, and immediate next steps.",
+      "author": "promptg-team",
+      "tags": [
+        "sre",
+        "incident",
+        "communication"
+      ],
+      "defaults": {
+        "goal": "Summarize incident impact, current status, and immediate next steps.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Impact, Current Status, Immediate Next Steps, Unknowns, Draft Update\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Impact <= 6 bullets; Current Status <= 6 bullets; Immediate Next Steps <= 8 bullets; Unknowns <= 6 bullets; Draft Update <= 180 words\n\nRole:\nYou are an SRE incident commander communicating clearly under pressure.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Raw incident details (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTurn the raw incident details into a clear brief. Prefer facts over speculation; separate what is known from unknowns. Draft a stakeholder-friendly update suitable for a status page or incident channel.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., exec-friendly, very short, no ETAs). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "sre-timeline-from-logs",
+      "displayName": "Timeline From Logs",
+      "description": "Build a timeline from logs/events and highlight gaps and hypotheses.",
+      "author": "promptg-team",
+      "tags": [
+        "sre",
+        "incident",
+        "timeline"
+      ],
+      "defaults": {
+        "goal": "Build a timeline from logs/events and highlight gaps and hypotheses.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Timeline, Gaps, Hypotheses, Next Checks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Timeline <= 12 bullets; Gaps <= 8 bullets; Hypotheses <= 6 bullets; Next Checks <= 8 bullets; Questions <= 6 bullets\n\nRole:\nYou are an SRE building an incident timeline from noisy signals.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Logs/events/notes (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nExtract an ordered timeline with timestamps if available. Call out gaps in the data and propose plausible hypotheses. Recommend the next checks that would most quickly confirm or falsify the hypotheses.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., last 60 minutes only, only customer-impacting events). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "sre-postmortem-writeup",
+      "displayName": "Postmortem Writeup",
+      "description": "Write a blameless postmortem with contributing factors and action items.",
+      "author": "promptg-team",
+      "tags": [
+        "sre",
+        "postmortem",
+        "rca"
+      ],
+      "defaults": {
+        "goal": "Write a blameless postmortem with contributing factors and action items.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Impact, Timeline, Root Cause, Contributing Factors, Action Items, Lessons, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Impact <= 6 bullets; Timeline <= 12 bullets; Root Cause <= 4 bullets; Contributing Factors <= 8 bullets; Action Items <= 10 bullets; Lessons <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are an SRE writing a blameless postmortem.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Incident details (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nWrite a clear, blameless postmortem. Separate root cause from contributing factors. Action items must be specific, owned (role/team if unknown), and verifiable.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., internal-only, short version, focus on action items). It cannot add output sections."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "oss-pr-review-maintainer",
+  "displayName": "PR Review (Maintainer)",
+  "description": "Review PRs for correctness, tests, docs, and project fit.",
+  "author": "promptg-team",
+  "tags": [
+    "oss",
+    "maintainer",
+    "review",
+    "diff",
+    "pr"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "oss-pr-review-maintainer",
+    "displayName": "PR Review (Maintainer)",
+    "description": "Review PRs for correctness, tests, docs, and project fit.",
+    "author": "promptg-team",
+    "tags": [
+      "oss",
+      "maintainer",
+      "review",
+      "diff",
+      "pr"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Must Fix, Nice To Have, Docs/Tests, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Must Fix <= 8 bullets; Nice To Have <= 6 bullets; Docs/Tests <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are an OSS maintainer reviewing a PR for acceptance.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; contributing guidelines, style rules, project goals): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nReview the diff for correctness, maintainability, tests/docs coverage, and alignment with project goals. Call out anything that blocks merge vs items that can be addressed later.",
+    "defaults": {
+      "goal": "Review the PR for correctness, tests/docs, maintainability, and project fit.",
+      "constraints": "None.",
+      "language": "Unspecified",
+      "context": "None."
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., focus on API stability, require tests). It cannot add output sections."
+      }
+    }
+  }
+}

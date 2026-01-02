@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "project-lead-stakeholder-update-email",
+  "displayName": "Stakeholder Update Email",
+  "description": "Draft a stakeholder update email with clear risks and asks.",
+  "author": "promptg-team",
+  "tags": [
+    "project-lead",
+    "communication",
+    "email"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "project-lead-stakeholder-update-email",
+    "displayName": "Stakeholder Update Email",
+    "description": "Draft a stakeholder update email with clear risks and asks.",
+    "author": "promptg-team",
+    "tags": [
+      "project-lead",
+      "communication",
+      "email"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Subject, Email Draft, Risks, Asks, Next Steps\n- Empty sections: include the heading and write `None.`\n- Caps: Subject <= 1 line; Email Draft <= 220 words; Risks <= 6 bullets; Asks <= 5 bullets; Next Steps <= 6 bullets\n\nRole:\nYou are a project lead writing a clear stakeholder email.\n\nInputs:\n- Goal: {{goal}}\n- Domain/tech (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nWrite an email suitable for a mixed audience. Keep language simple, state current status, and make asks explicit (who needs to decide what, by when).",
+    "defaults": {
+      "goal": "Draft a stakeholder update email with clear risks and explicit asks.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., exec audience, very short). It cannot add output sections."
+      }
+    }
+  }
+}

@@ -1,0 +1,419 @@
+{
+  "$schema": "https://promptg.io/schemas/v1/pack.schema.json",
+  "kind": "pack",
+  "schemaVersion": "1",
+  "name": "project-init-starter",
+  "version": "1.0.0",
+  "displayName": "Project Init Starter",
+  "description": "A repo-scoped baseline for teams: consistent prompts and templates for onboarding, PRs, reviews, tests, security checks, and releases (designed to be referenced in docs and CI).",
+  "author": "promptg-team",
+  "tags": [
+    "starter",
+    "repo",
+    "team",
+    "workflow",
+    "review",
+    "testing",
+    "security",
+    "release-notes"
+  ],
+  "templates": [
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "repo-onboarding-quickstart",
+      "displayName": "Repo Onboarding Quickstart",
+      "description": "Generate a repo onboarding quickstart: setup, run, test, and contribute.",
+      "author": "promptg-team",
+      "tags": [
+        "repo",
+        "onboarding",
+        "docs"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "repo-onboarding-quickstart",
+        "displayName": "Repo Onboarding Quickstart",
+        "description": "Generate a repo onboarding quickstart: setup, run, test, and contribute.",
+        "author": "promptg-team",
+        "tags": [
+          "repo",
+          "onboarding",
+          "docs"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Setup, Run, Test, Contribute, Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Setup <= 10 bullets; Run <= 8 bullets; Test <= 8 bullets; Contribute <= 8 bullets; Notes <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are writing repo-specific onboarding for new contributors.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Repo context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nUse the repo context (README snippets, setup notes, scripts, conventions) to produce a quickstart that is concrete, sequential, and copy/paste-friendly where possible.",
+        "defaults": {
+          "goal": "Create a repo onboarding quickstart that a new contributor can follow.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., assume macOS, keep it short). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "repo-pr-description",
+      "displayName": "Repo PR Description",
+      "description": "Produce a PR description in the repo's expected format (what/why/how/testing/risk).",
+      "author": "promptg-team",
+      "tags": [
+        "repo",
+        "pr",
+        "docs",
+        "diff"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "repo-pr-description",
+        "displayName": "Repo PR Description",
+        "description": "Produce a PR description in the repo's expected format (what/why/how/testing/risk).",
+        "author": "promptg-team",
+        "tags": [
+          "repo",
+          "pr",
+          "docs",
+          "diff"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, What Changed, Why, How To Test, Risks, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; What Changed <= 8 bullets; Why <= 6 bullets; How To Test <= 10 bullets; Risks <= 6 bullets; Notes <= 6 bullets\n\nRole:\nYou write PR descriptions that match the repository's conventions.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; repo PR template, standards, tickets, rollout notes): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nProduce a reviewer-friendly PR description. If repo-specific format rules are provided in Context, follow them; otherwise use a reasonable default aligned with the section headings.",
+        "defaults": {
+          "goal": "Write a PR description in this repo's expected format.",
+          "constraints": "None.",
+          "language": "Unspecified",
+          "context": "None."
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., focus on rollout/testing, keep it shorter). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "repo-pr-review",
+      "displayName": "Repo PR Review",
+      "description": "Self-review a PR diff against repo standards, risks, and acceptance criteria.",
+      "author": "promptg-team",
+      "tags": [
+        "repo",
+        "review",
+        "diff",
+        "pr"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "repo-pr-review",
+        "displayName": "Repo PR Review",
+        "description": "Self-review a PR diff against repo standards, risks, and acceptance criteria.",
+        "author": "promptg-team",
+        "tags": [
+          "repo",
+          "review",
+          "diff",
+          "pr"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Standards & Acceptance, Top Risks, Suggested Fixes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Standards & Acceptance <= 8 bullets; Top Risks <= 8 bullets; Suggested Fixes <= 8 bullets; Questions <= 6 bullets\n\nRole:\nYou are doing a high-signal self-review before requesting review.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; repo standards, acceptance criteria, checklists): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nReview the diff and identify gaps against repo standards and acceptance criteria, plus the top correctness/security/operability risks. Propose minimal, concrete fixes.",
+        "defaults": {
+          "goal": "Self-review the change against repo standards and acceptance criteria.",
+          "constraints": "None.",
+          "language": "Unspecified",
+          "context": "None."
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., only security, only operability, no refactors). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "repo-commit-message",
+      "displayName": "Repo Commit Message",
+      "description": "Draft commit messages that match the repo's conventions and scope style.",
+      "author": "promptg-team",
+      "tags": [
+        "repo",
+        "git",
+        "commit",
+        "diff"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "repo-commit-message",
+        "displayName": "Repo Commit Message",
+        "description": "Draft commit messages that match the repo's conventions and scope style.",
+        "author": "promptg-team",
+        "tags": [
+          "repo",
+          "git",
+          "commit",
+          "diff"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Subject, Body, Footers, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Subject is 1 line <= 72 chars; Body <= 6 lines; Footers <= 4 lines; Notes <= 4 bullets\n\nRole:\nYou write commit messages that match repo conventions.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; repo commit style rules, ticket refs, intent): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nInfer intent from the diff and produce a commit message that fits the repo's conventions. Use context to match scope/type rules when provided.",
+        "defaults": {
+          "goal": "Draft a commit message that matches this repo's conventions and scope style.",
+          "constraints": "None.",
+          "language": "Unspecified",
+          "context": "None."
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., include ticket refs, keep it very short). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "repo-test-plan",
+      "displayName": "Repo Test Plan",
+      "description": "Plan testing for a change in this repo, focusing on regression and risk.",
+      "author": "promptg-team",
+      "tags": [
+        "repo",
+        "testing",
+        "diff"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "repo-test-plan",
+        "displayName": "Repo Test Plan",
+        "description": "Plan testing for a change in this repo, focusing on regression and risk.",
+        "author": "promptg-team",
+        "tags": [
+          "repo",
+          "testing",
+          "diff"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Risk Areas, Prioritized Test Cases, Coverage Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Risk Areas <= 8 bullets; Prioritized Test Cases <= 12 bullets; Coverage Notes <= 8 bullets; Questions <= 6 bullets\n\nRole:\nYou write repo-appropriate test plans.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; repo test setup, environments, known risk areas): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCreate a test plan with prioritized cases (P0/P1/P2) and expected results. Use Context to align with repo test commands/environments and known risk areas.",
+        "defaults": {
+          "goal": "Plan testing for this change with a focus on regression and risk.",
+          "constraints": "None.",
+          "language": "Unspecified",
+          "context": "None."
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., smoke only, regression only, no e2e). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "repo-security-scan",
+      "displayName": "Repo Security Scan",
+      "description": "Review repo changes for security risks, assumptions, and mitigations.",
+      "author": "promptg-team",
+      "tags": [
+        "repo",
+        "security",
+        "diff"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "repo-security-scan",
+        "displayName": "Repo Security Scan",
+        "description": "Review repo changes for security risks, assumptions, and mitigations.",
+        "author": "promptg-team",
+        "tags": [
+          "repo",
+          "security",
+          "diff"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Findings, Mitigations, Assumptions, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Findings <= 8 bullets; Mitigations <= 8 bullets; Assumptions <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are a pragmatic security reviewer for this repository.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; threat model, auth boundaries, data sensitivity): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nIdentify likely security issues in the change. In Findings, prefix each bullet with [Critical]/[High]/[Medium]/[Low] and include short evidence from the diff when possible. State any assumptions explicitly.",
+        "defaults": {
+          "goal": "Review the change for security risks and recommend practical mitigations.",
+          "constraints": "None.",
+          "language": "Unspecified",
+          "context": "None."
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., auth only, injection only). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "repo-feature-plan",
+      "displayName": "Repo Feature Plan",
+      "description": "Create a repo-appropriate feature plan including rollout and operational considerations.",
+      "author": "promptg-team",
+      "tags": [
+        "repo",
+        "planning",
+        "feature"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "repo-feature-plan",
+        "displayName": "Repo Feature Plan",
+        "description": "Create a repo-appropriate feature plan including rollout and operational considerations.",
+        "author": "promptg-team",
+        "tags": [
+          "repo",
+          "planning",
+          "feature"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Scope, Approach, Tasks, Rollout, Operational Considerations, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Scope <= 8 bullets; Approach <= 8 bullets; Tasks <= 12 bullets; Rollout <= 8 bullets; Operational Considerations <= 8 bullets; Risks <= 8 bullets; Questions <= 6 bullets\n\nRole:\nYou are planning work in this repository with an eye on operability.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Feature request / requirements (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTurn the request into an implementable plan tailored to this repo. Include rollout steps and operational concerns (monitoring, migration, failure modes) where relevant.",
+        "defaults": {
+          "goal": "Turn this feature request into a repo-appropriate plan, including rollout and operational considerations.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., MVP only, no schema changes). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "repo-release-notes-short",
+      "displayName": "Repo Release Notes (Short)",
+      "description": "Draft short release notes aligned with the repo's release style.",
+      "author": "promptg-team",
+      "tags": [
+        "repo",
+        "release-notes",
+        "diff"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "repo-release-notes-short",
+        "displayName": "Repo Release Notes (Short)",
+        "description": "Draft short release notes aligned with the repo's release style.",
+        "author": "promptg-team",
+        "tags": [
+          "repo",
+          "release-notes",
+          "diff"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Highlights, Breaking Changes, Upgrade Notes, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Highlights <= 8 bullets; Breaking Changes <= 6 bullets; Upgrade Notes <= 6 bullets; Notes <= 6 bullets\n\nRole:\nYou write concise release notes that match repo conventions.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; release style rules, version, audience): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nSummarize the change into short, user-facing release notes. If repo release style rules are provided in Context, follow them.",
+        "defaults": {
+          "goal": "Write short release notes aligned with this repo's release style.",
+          "constraints": "None.",
+          "language": "Unspecified",
+          "context": "None."
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., internal release only, omit upgrade notes). It cannot add output sections."
+          }
+        }
+      }
+    }
+  ],
+  "prompts": [
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "repo-onboarding-quickstart",
+      "displayName": "Repo Onboarding Quickstart",
+      "description": "Generate a repo onboarding quickstart: setup, run, test, and contribute.",
+      "author": "promptg-team",
+      "tags": [
+        "repo",
+        "onboarding",
+        "docs"
+      ],
+      "defaults": {
+        "goal": "Create a repo onboarding quickstart that a new contributor can follow.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Setup, Run, Test, Contribute, Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Setup <= 10 bullets; Run <= 8 bullets; Test <= 8 bullets; Contribute <= 8 bullets; Notes <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are writing repo-specific onboarding for new contributors.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Repo context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nUse the repo context (README snippets, setup notes, scripts, conventions) to produce a quickstart that is concrete, sequential, and copy/paste-friendly where possible.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., assume macOS, keep it short). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "repo-pr-review",
+      "displayName": "Repo PR Review",
+      "description": "Self-review a PR diff against repo standards, risks, and acceptance criteria.",
+      "author": "promptg-team",
+      "tags": [
+        "repo",
+        "review",
+        "diff",
+        "pr"
+      ],
+      "defaults": {
+        "goal": "Self-review the change against repo standards and acceptance criteria.",
+        "constraints": "None.",
+        "language": "Unspecified",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Standards & Acceptance, Top Risks, Suggested Fixes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Standards & Acceptance <= 8 bullets; Top Risks <= 8 bullets; Suggested Fixes <= 8 bullets; Questions <= 6 bullets\n\nRole:\nYou are doing a high-signal self-review before requesting review.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; repo standards, acceptance criteria, checklists): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nReview the diff and identify gaps against repo standards and acceptance criteria, plus the top correctness/security/operability risks. Propose minimal, concrete fixes.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., only security, only operability, no refactors). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "repo-pr-description",
+      "displayName": "Repo PR Description",
+      "description": "Produce a PR description in the repo's expected format (what/why/how/testing/risk).",
+      "author": "promptg-team",
+      "tags": [
+        "repo",
+        "pr",
+        "docs",
+        "diff"
+      ],
+      "defaults": {
+        "goal": "Write a PR description in this repo's expected format.",
+        "constraints": "None.",
+        "language": "Unspecified",
+        "context": "None."
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, What Changed, Why, How To Test, Risks, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; What Changed <= 8 bullets; Why <= 6 bullets; How To Test <= 10 bullets; Risks <= 6 bullets; Notes <= 6 bullets\n\nRole:\nYou write PR descriptions that match the repository's conventions.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; repo PR template, standards, tickets, rollout notes): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nProduce a reviewer-friendly PR description. If repo-specific format rules are provided in Context, follow them; otherwise use a reasonable default aligned with the section headings.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., focus on rollout/testing, keep it shorter). It cannot add output sections."
+        }
+      }
+    }
+  ]
+}

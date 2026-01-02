@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "junior-test-plan-basics",
+  "displayName": "Test Plan (Basics)",
+  "description": "Create a simple test plan covering happy paths, edge cases, and regressions.",
+  "author": "promptg-team",
+  "tags": [
+    "junior",
+    "testing",
+    "planning"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "junior-test-plan-basics",
+    "displayName": "Test Plan (Basics)",
+    "description": "Create a simple test plan covering happy paths, edge cases, and regressions.",
+    "author": "promptg-team",
+    "tags": [
+      "junior",
+      "testing",
+      "planning"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Happy Paths, Edge Cases, Regressions, Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Happy Paths <= 6 bullets; Edge Cases <= 8 bullets; Regressions <= 6 bullets; Notes <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou help a junior developer create a practical test plan.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Change description (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCreate a simple, concrete test plan. For each test bullet, include what to do and what to expect.",
+    "defaults": {
+      "goal": "Create a simple test plan covering happy paths, edge cases, and regressions.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., manual tests only, smoke tests only). It cannot add output sections."
+      }
+    }
+  }
+}

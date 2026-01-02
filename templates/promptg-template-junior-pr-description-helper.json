@@ -1,0 +1,41 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "junior-pr-description-helper",
+  "displayName": "PR Description (Helper)",
+  "description": "Write a clear PR description with prompts for context, changes, and testing.",
+  "author": "promptg-team",
+  "tags": [
+    "junior",
+    "pr",
+    "docs",
+    "diff"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "junior-pr-description-helper",
+    "displayName": "PR Description (Helper)",
+    "description": "Write a clear PR description with prompts for context, changes, and testing.",
+    "author": "promptg-team",
+    "tags": [
+      "junior",
+      "pr",
+      "docs",
+      "diff"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Context, Changes, How To Test, Risks, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Context <= 6 bullets; Changes <= 8 bullets; How To Test <= 10 bullets; Risks <= 6 bullets; Notes <= 6 bullets\n\nRole:\nYou help a junior developer write a clear PR description.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; why this change exists, links, constraints): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nWrite a reviewer-friendly PR description. Use plain language. If details are missing, call them out in Notes or Questions instead of guessing.",
+    "defaults": {
+      "goal": "Write a clear PR description that helps reviewers understand context, changes, and testing.",
+      "constraints": "None.",
+      "language": "Unspecified",
+      "context": "None."
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., keep it short, focus on testing). It cannot add output sections."
+      }
+    }
+  }
+}

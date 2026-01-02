@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "tech-lead-execution-plan",
+  "displayName": "Execution Plan",
+  "description": "Create an execution plan with milestones, sequencing, and dependencies.",
+  "author": "promptg-team",
+  "tags": [
+    "tech-lead",
+    "execution",
+    "planning"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "tech-lead-execution-plan",
+    "displayName": "Execution Plan",
+    "description": "Create an execution plan with milestones, sequencing, and dependencies.",
+    "author": "promptg-team",
+    "tags": [
+      "tech-lead",
+      "execution",
+      "planning"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Milestones, Sequencing, Dependencies, Risks, Next Steps\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Milestones <= 10 bullets; Sequencing <= 8 bullets; Dependencies <= 8 bullets; Risks <= 8 bullets; Next Steps <= 6 bullets\n\nRole:\nYou are a tech lead turning a plan into execution.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCreate an executable plan: outcome-focused milestones, realistic sequencing, explicit dependencies, and risks with mitigations.",
+    "defaults": {
+      "goal": "Create an execution plan with milestones, sequencing, and dependencies.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., minimal parallel work, avoid outages). It cannot add output sections."
+      }
+    }
+  }
+}

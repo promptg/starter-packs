@@ -1,0 +1,40 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "oss-repro-request",
+  "displayName": "Repro Request",
+  "description": "Request a minimal repro with an actionable checklist and environment details.",
+  "author": "promptg-team",
+  "tags": [
+    "oss",
+    "maintainer",
+    "repro",
+    "issues"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "oss-repro-request",
+    "displayName": "Repro Request",
+    "description": "Request a minimal repro with an actionable checklist and environment details.",
+    "author": "promptg-team",
+    "tags": [
+      "oss",
+      "maintainer",
+      "repro",
+      "issues"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Minimal Repro Checklist, Environment Checklist, What Happens Next, Draft Reply\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Minimal Repro Checklist <= 8 bullets; Environment Checklist <= 8 bullets; What Happens Next <= 5 bullets; Draft Reply <= 200 words\n\nRole:\nYou are an OSS maintainer requesting a minimal reproduction.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Issue text / symptoms (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nAsk for the smallest repro that demonstrates the problem. Provide an actionable checklist (steps and expected results) and a short environment checklist (versions, OS, configs). Include what you'll do once the repro is provided.",
+    "defaults": {
+      "goal": "Request a minimal repro and the key environment details needed to debug.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., require a repo link, require a minimal snippet). It cannot add output sections."
+      }
+    }
+  }
+}

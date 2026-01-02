@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "sre-incident-brief",
+  "displayName": "Incident Brief",
+  "description": "Summarize incident impact, current status, and immediate next steps.",
+  "author": "promptg-team",
+  "tags": [
+    "sre",
+    "incident",
+    "communication"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "sre-incident-brief",
+    "displayName": "Incident Brief",
+    "description": "Summarize incident impact, current status, and immediate next steps.",
+    "author": "promptg-team",
+    "tags": [
+      "sre",
+      "incident",
+      "communication"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Impact, Current Status, Immediate Next Steps, Unknowns, Draft Update\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Impact <= 6 bullets; Current Status <= 6 bullets; Immediate Next Steps <= 8 bullets; Unknowns <= 6 bullets; Draft Update <= 180 words\n\nRole:\nYou are an SRE incident commander communicating clearly under pressure.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Raw incident details (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTurn the raw incident details into a clear brief. Prefer facts over speculation; separate what is known from unknowns. Draft a stakeholder-friendly update suitable for a status page or incident channel.",
+    "defaults": {
+      "goal": "Summarize incident impact, current status, and immediate next steps.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., exec-friendly, very short, no ETAs). It cannot add output sections."
+      }
+    }
+  }
+}

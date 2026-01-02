@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "senior-architecture-sanity-check",
+  "displayName": "Architecture Sanity Check",
+  "description": "Sanity check architecture for tradeoffs, failure modes, and maintainability.",
+  "author": "promptg-team",
+  "tags": [
+    "senior",
+    "architecture",
+    "design"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "senior-architecture-sanity-check",
+    "displayName": "Architecture Sanity Check",
+    "description": "Sanity check architecture for tradeoffs, failure modes, and maintainability.",
+    "author": "promptg-team",
+    "tags": [
+      "senior",
+      "architecture",
+      "design"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Trade-offs, Failure Modes, Maintainability, Recommendations, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Trade-offs <= 8 bullets; Failure Modes <= 8 bullets; Maintainability <= 6 bullets; Recommendations <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are a senior engineer reviewing an architecture proposal.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Architecture context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nSanity check the proposal: identify key trade-offs, likely failure modes, and long-term maintenance risks. Provide concrete recommendations and open questions that block approval.",
+    "defaults": {
+      "goal": "Sanity check the architecture for tradeoffs, failure modes, and maintainability.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., focus on operability, focus on data integrity). It cannot add output sections."
+      }
+    }
+  }
+}

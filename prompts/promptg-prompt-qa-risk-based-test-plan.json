@@ -1,0 +1,21 @@
+{
+  "kind": "prompt",
+  "schemaVersion": "1",
+  "name": "qa-risk-based-test-plan",
+  "displayName": "Risk-Based Test Plan",
+  "description": "Build a risk-based test plan with priority ordering and coverage rationale.",
+  "author": "promptg-team",
+  "tags": ["qa", "testing", "planning"],
+  "defaults": {
+    "goal": "Build a risk-based test plan with priority ordering and coverage rationale.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Risk Assessment, Test Plan, Coverage Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 3 bullets; Risk Assessment \u003c= 8 bullets; Test Plan \u003c= 12 bullets; Coverage Notes \u003c= 6 bullets; Questions \u003c= 6 bullets\n\nRole:\nYou are a QA engineer building a high-signal, risk-based test plan.\n\nInputs:\n- Goal: {{goal}}\n- Domain/stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Change description (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCreate a risk-based test plan. Prioritize tests that reduce the highest customer and regression risk first. Include brief rationale in Risk Assessment (what could break and why).",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., manual-only, mobile-only, smoke tests only). It cannot add output sections."
+    }
+  }
+}

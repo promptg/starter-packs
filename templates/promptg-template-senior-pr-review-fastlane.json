@@ -1,0 +1,41 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "senior-pr-review-fastlane",
+  "displayName": "PR Review (Fastlane)",
+  "description": "Fast PR review: top risks, severity-ranked findings, and minimal fixes.",
+  "author": "promptg-team",
+  "tags": [
+    "senior",
+    "review",
+    "diff",
+    "pr"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "senior-pr-review-fastlane",
+    "displayName": "PR Review (Fastlane)",
+    "description": "Fast PR review: top risks, severity-ranked findings, and minimal fixes.",
+    "author": "promptg-team",
+    "tags": [
+      "senior",
+      "review",
+      "diff",
+      "pr"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Severity-Ranked Findings, Minimal Fixes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Severity-Ranked Findings <= 8 bullets; Minimal Fixes <= 8 bullets; Questions <= 5 bullets\n\nRole:\nYou are a senior engineer doing a high-signal PR review.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nReview the diff with a bias toward correctness, security, and maintainability risk. Rank findings by severity (Critical/High/Medium/Low) and propose minimal, concrete fixes.",
+    "defaults": {
+      "goal": "Review the PR quickly: top risks, severity-ranked findings, and minimal fixes.",
+      "constraints": "None.",
+      "language": "Unspecified",
+      "context": "None."
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., security-only, no refactors, keep it ultra short). It cannot add output sections."
+      }
+    }
+  }
+}

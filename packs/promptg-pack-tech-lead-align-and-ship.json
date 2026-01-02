@@ -1,0 +1,366 @@
+{
+  "$schema": "https://promptg.io/schemas/v1/pack.schema.json",
+  "kind": "pack",
+  "schemaVersion": "1",
+  "name": "tech-lead-align-and-ship",
+  "version": "1.0.0",
+  "displayName": "Tech Lead: Align & Ship",
+  "description": "Planning and alignment prompts for tech leads: turn requirements into scope, tradeoffs, technical direction, rollout steps, and team-ready communication.",
+  "author": "promptg-team",
+  "tags": [
+    "tech-lead",
+    "planning",
+    "alignment",
+    "decision",
+    "rollout",
+    "execution"
+  ],
+  "templates": [
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "tech-lead-feature-brief",
+      "displayName": "Feature Brief",
+      "description": "Turn requirements into a brief with scope, non-goals, and acceptance criteria.",
+      "author": "promptg-team",
+      "tags": [
+        "tech-lead",
+        "planning",
+        "requirements"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "tech-lead-feature-brief",
+        "displayName": "Feature Brief",
+        "description": "Turn requirements into a brief with scope, non-goals, and acceptance criteria.",
+        "author": "promptg-team",
+        "tags": [
+          "tech-lead",
+          "planning",
+          "requirements"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Scope, Non-Goals, Acceptance Criteria, Risks, Questions, Next Steps\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 5 bullets; Scope <= 8 bullets; Non-Goals <= 8 bullets; Acceptance Criteria <= 10 bullets; Risks <= 8 bullets; Questions <= 8 bullets; Next Steps <= 6 bullets\n\nRole:\nYou are a tech lead turning requirements into a ship-ready brief.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Requirements / context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nMake scope boundaries crisp and testable. Write acceptance criteria as concrete, verifiable statements. Prefer a plan that supports iteration and de-risks early.",
+        "defaults": {
+          "goal": "Turn the requirements into a brief with scope, non-goals, and acceptance criteria.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., 2-week deadline, no new services). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "tech-lead-tech-design-outline",
+      "displayName": "Tech Design Outline",
+      "description": "Draft a technical design with options, tradeoffs, and open questions.",
+      "author": "promptg-team",
+      "tags": [
+        "tech-lead",
+        "design",
+        "architecture"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "tech-lead-tech-design-outline",
+        "displayName": "Tech Design Outline",
+        "description": "Draft a technical design with options, tradeoffs, and open questions.",
+        "author": "promptg-team",
+        "tags": [
+          "tech-lead",
+          "design",
+          "architecture"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Options, Recommended Approach, Trade-offs, Open Questions, Next Steps\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 5 bullets; Options <= 3 options; Recommended Approach <= 8 bullets; Trade-offs <= 10 bullets; Open Questions <= 8 bullets; Next Steps <= 6 bullets\n\nRole:\nYou are a tech lead drafting a decision-oriented technical design.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Design context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nProvide 2-3 realistic options, compare them on key criteria, and recommend one. Make assumptions explicit and surface open questions that block execution.",
+        "defaults": {
+          "goal": "Draft a technical design outline with options, tradeoffs, and open questions.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., cost cap, latency target, compliance). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "tech-lead-scope-tradeoffs",
+      "displayName": "Scope Trade-offs",
+      "description": "Propose scope tradeoffs and phased delivery to hit constraints.",
+      "author": "promptg-team",
+      "tags": [
+        "tech-lead",
+        "scope",
+        "planning"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "tech-lead-scope-tradeoffs",
+        "displayName": "Scope Trade-offs",
+        "description": "Propose scope tradeoffs and phased delivery to hit constraints.",
+        "author": "promptg-team",
+        "tags": [
+          "tech-lead",
+          "scope",
+          "planning"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Constraints, Options, Phased Plan, Recommendation, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Constraints <= 8 bullets; Options <= 6 bullets; Phased Plan <= 8 bullets; Recommendation <= 5 bullets; Risks <= 8 bullets; Questions <= 8 bullets\n\nRole:\nYou are a tech lead protecting delivery by making trade-offs explicit.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nExtract the hard constraints (time, scope, cost, risk). Propose concrete trade-offs and a phased plan that delivers value early while preserving a path to the full solution.",
+        "defaults": {
+          "goal": "Propose scope tradeoffs and phased delivery to hit constraints.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., deadline, minimal team, avoid migrations). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "tech-lead-execution-plan",
+      "displayName": "Execution Plan",
+      "description": "Create an execution plan with milestones, sequencing, and dependencies.",
+      "author": "promptg-team",
+      "tags": [
+        "tech-lead",
+        "execution",
+        "planning"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "tech-lead-execution-plan",
+        "displayName": "Execution Plan",
+        "description": "Create an execution plan with milestones, sequencing, and dependencies.",
+        "author": "promptg-team",
+        "tags": [
+          "tech-lead",
+          "execution",
+          "planning"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Milestones, Sequencing, Dependencies, Risks, Next Steps\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Milestones <= 10 bullets; Sequencing <= 8 bullets; Dependencies <= 8 bullets; Risks <= 8 bullets; Next Steps <= 6 bullets\n\nRole:\nYou are a tech lead turning a plan into execution.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCreate an executable plan: outcome-focused milestones, realistic sequencing, explicit dependencies, and risks with mitigations.",
+        "defaults": {
+          "goal": "Create an execution plan with milestones, sequencing, and dependencies.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., minimal parallel work, avoid outages). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "tech-lead-rollout-plan",
+      "displayName": "Rollout Plan",
+      "description": "Plan rollout and migration with observability, gating, and rollback.",
+      "author": "promptg-team",
+      "tags": [
+        "tech-lead",
+        "rollout",
+        "migration",
+        "operability"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "tech-lead-rollout-plan",
+        "displayName": "Rollout Plan",
+        "description": "Plan rollout and migration with observability, gating, and rollback.",
+        "author": "promptg-team",
+        "tags": [
+          "tech-lead",
+          "rollout",
+          "migration",
+          "operability"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Rollout Steps, Observability, Gating, Rollback, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Rollout Steps <= 10 bullets; Observability <= 8 bullets; Gating <= 8 bullets; Rollback <= 8 bullets; Risks <= 8 bullets; Questions <= 8 bullets\n\nRole:\nYou are a tech lead planning a safe rollout.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Change context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nPlan a rollout that reduces blast radius: include observability, gating criteria, and a practical rollback. Make unknowns explicit and turn them into questions or tasks.",
+        "defaults": {
+          "goal": "Plan rollout and migration with observability, gating, and rollback.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., no downtime, phased rollout, feature flag required). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "tech-lead-adr",
+      "displayName": "ADR",
+      "description": "Write an ADR capturing context, decision, and consequences.",
+      "author": "promptg-team",
+      "tags": [
+        "tech-lead",
+        "adr",
+        "decision"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "tech-lead-adr",
+        "displayName": "ADR",
+        "description": "Write an ADR capturing context, decision, and consequences.",
+        "author": "promptg-team",
+        "tags": [
+          "tech-lead",
+          "adr",
+          "decision"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Title, Context, Decision, Alternatives, Consequences, Next Steps\n- Empty sections: include the heading and write `None.`\n- Caps: Title <= 1 line; each other section <= 10 bullets\n\nRole:\nYou are a tech lead writing a concise ADR.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- ADR context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCapture the decision in a durable, scannable format. Make alternatives explicit and list consequences (both positive and negative).",
+        "defaults": {
+          "goal": "Write an ADR capturing context, decision, and consequences.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., keep it very short, exclude background). It cannot add output sections."
+          }
+        }
+      }
+    },
+    {
+      "kind": "template",
+      "schemaVersion": "1",
+      "name": "tech-lead-team-message",
+      "displayName": "Team Message",
+      "description": "Produce a team update summarizing decisions, rationale, and next steps.",
+      "author": "promptg-team",
+      "tags": [
+        "tech-lead",
+        "communication",
+        "alignment"
+      ],
+      "prompt": {
+        "kind": "prompt",
+        "schemaVersion": "1",
+        "name": "tech-lead-team-message",
+        "displayName": "Team Message",
+        "description": "Produce a team update summarizing decisions, rationale, and next steps.",
+        "author": "promptg-team",
+        "tags": [
+          "tech-lead",
+          "communication",
+          "alignment"
+        ],
+        "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Team Message, Rationale, Next Steps, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Team Message <= 180 words; Rationale <= 8 bullets; Next Steps <= 8 bullets; Questions <= 6 bullets\n\nRole:\nYou are a tech lead communicating decisions clearly to the team.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nWrite a message that drives alignment: what we decided, why, and what happens next. Keep it clear and actionable.",
+        "defaults": {
+          "goal": "Produce a team update summarizing decisions, rationale, and next steps.",
+          "constraints": "None.",
+          "language": "Unspecified"
+        },
+        "x-promptg-interactive": {
+          "constraints": {
+            "question": "Any extra constraints? (optional)",
+            "help": "Use constraints to narrow scope (e.g., shorter message, avoid jargon). It cannot add output sections."
+          }
+        }
+      }
+    }
+  ],
+  "prompts": [
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "tech-lead-feature-brief",
+      "displayName": "Feature Brief",
+      "description": "Turn requirements into a brief with scope, non-goals, and acceptance criteria.",
+      "author": "promptg-team",
+      "tags": [
+        "tech-lead",
+        "planning",
+        "requirements"
+      ],
+      "defaults": {
+        "goal": "Turn the requirements into a brief with scope, non-goals, and acceptance criteria.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Scope, Non-Goals, Acceptance Criteria, Risks, Questions, Next Steps\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 5 bullets; Scope <= 8 bullets; Non-Goals <= 8 bullets; Acceptance Criteria <= 10 bullets; Risks <= 8 bullets; Questions <= 8 bullets; Next Steps <= 6 bullets\n\nRole:\nYou are a tech lead turning requirements into a ship-ready brief.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Requirements / context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nMake scope boundaries crisp and testable. Write acceptance criteria as concrete, verifiable statements. Prefer a plan that supports iteration and de-risks early.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., 2-week deadline, no new services). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "tech-lead-tech-design-outline",
+      "displayName": "Tech Design Outline",
+      "description": "Draft a technical design with options, tradeoffs, and open questions.",
+      "author": "promptg-team",
+      "tags": [
+        "tech-lead",
+        "design",
+        "architecture"
+      ],
+      "defaults": {
+        "goal": "Draft a technical design outline with options, tradeoffs, and open questions.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Options, Recommended Approach, Trade-offs, Open Questions, Next Steps\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 5 bullets; Options <= 3 options; Recommended Approach <= 8 bullets; Trade-offs <= 10 bullets; Open Questions <= 8 bullets; Next Steps <= 6 bullets\n\nRole:\nYou are a tech lead drafting a decision-oriented technical design.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Design context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nProvide 2-3 realistic options, compare them on key criteria, and recommend one. Make assumptions explicit and surface open questions that block execution.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., cost cap, latency target, compliance). It cannot add output sections."
+        }
+      }
+    },
+    {
+      "kind": "prompt",
+      "schemaVersion": "1",
+      "name": "tech-lead-rollout-plan",
+      "displayName": "Rollout Plan",
+      "description": "Plan rollout and migration with observability, gating, and rollback.",
+      "author": "promptg-team",
+      "tags": [
+        "tech-lead",
+        "rollout",
+        "migration",
+        "operability"
+      ],
+      "defaults": {
+        "goal": "Plan rollout and migration with observability, gating, and rollback.",
+        "constraints": "None.",
+        "language": "Unspecified"
+      },
+      "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Rollout Steps, Observability, Gating, Rollback, Risks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Rollout Steps <= 10 bullets; Observability <= 8 bullets; Gating <= 8 bullets; Rollback <= 8 bullets; Risks <= 8 bullets; Questions <= 8 bullets\n\nRole:\nYou are a tech lead planning a safe rollout.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Change context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nPlan a rollout that reduces blast radius: include observability, gating criteria, and a practical rollback. Make unknowns explicit and turn them into questions or tasks.",
+      "x-promptg-interactive": {
+        "constraints": {
+          "question": "Any extra constraints? (optional)",
+          "help": "Use constraints to narrow scope (e.g., no downtime, phased rollout, feature flag required). It cannot add output sections."
+        }
+      }
+    }
+  ]
+}

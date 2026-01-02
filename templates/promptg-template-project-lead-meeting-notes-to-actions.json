@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "project-lead-meeting-notes-to-actions",
+  "displayName": "Meeting Notes to Actions",
+  "description": "Turn notes into decisions, action items, owners, and deadlines.",
+  "author": "promptg-team",
+  "tags": [
+    "project-lead",
+    "meeting-notes",
+    "communication"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "project-lead-meeting-notes-to-actions",
+    "displayName": "Meeting Notes to Actions",
+    "description": "Turn notes into decisions, action items, owners, and deadlines.",
+    "author": "promptg-team",
+    "tags": [
+      "project-lead",
+      "meeting-notes",
+      "communication"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Decisions, Action Items, Risks, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Decisions <= 10 bullets; Action Items <= 12 bullets; Risks <= 6 bullets; Notes <= 8 bullets\n\nRole:\nYou are a project lead converting meeting notes into execution.\n\nInputs:\n- Goal: {{goal}}\n- Domain/tech (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Raw meeting notes (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nExtract decisions and convert follow-ups into action items. Each action item must include: Owner (role/team), Action (verb), and Due date (or 'TBD').",
+    "defaults": {
+      "goal": "Turn meeting notes into decisions and action items with owners and deadlines.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., only decisions+actions, omit notes). It cannot add output sections."
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "tech-lead-adr",
+  "displayName": "ADR",
+  "description": "Write an ADR capturing context, decision, and consequences.",
+  "author": "promptg-team",
+  "tags": [
+    "tech-lead",
+    "adr",
+    "decision"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "tech-lead-adr",
+    "displayName": "ADR",
+    "description": "Write an ADR capturing context, decision, and consequences.",
+    "author": "promptg-team",
+    "tags": [
+      "tech-lead",
+      "adr",
+      "decision"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Title, Context, Decision, Alternatives, Consequences, Next Steps\n- Empty sections: include the heading and write `None.`\n- Caps: Title <= 1 line; each other section <= 10 bullets\n\nRole:\nYou are a tech lead writing a concise ADR.\n\nInputs:\n- Goal: {{goal}}\n- Tech stack (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- ADR context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCapture the decision in a durable, scannable format. Make alternatives explicit and list consequences (both positive and negative).",
+    "defaults": {
+      "goal": "Write an ADR capturing context, decision, and consequences.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., keep it very short, exclude background). It cannot add output sections."
+      }
+    }
+  }
+}

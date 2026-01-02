@@ -1,0 +1,39 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "dev-release-notes-short",
+  "displayName": "Release Notes (Short)",
+  "description": "Summarize changes into short release notes with user-facing highlights.",
+  "author": "promptg-team",
+  "tags": [
+    "release-notes",
+    "summary",
+    "diff"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "dev-release-notes-short",
+    "displayName": "Release Notes (Short)",
+    "description": "Summarize changes into short release notes with user-facing highlights.",
+    "author": "promptg-team",
+    "tags": [
+      "release-notes",
+      "summary",
+      "diff"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Highlights, Breaking Changes, Upgrade Notes, Notes\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Highlights <= 8 bullets; Breaking Changes <= 6 bullets; Upgrade Notes <= 6 bullets; Notes <= 6 bullets\n\nRole:\nYou write concise, user-facing release notes.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; product framing, version, audience): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nSummarize the change into short release notes. Focus on what users will notice and what they should do; avoid internal implementation details unless they affect behavior.",
+    "defaults": {
+      "language": "Unspecified",
+      "goal": "Write short, user-facing release notes with highlights and upgrade notes.",
+      "constraints": "None.",
+      "context": "None."
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., internal release notes only, omit upgrade notes). It cannot add output sections."
+      }
+    }
+  }
+}

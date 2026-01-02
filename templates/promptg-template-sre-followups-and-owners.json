@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "sre-followups-and-owners",
+  "displayName": "Follow-ups & Owners",
+  "description": "Turn learnings into follow-ups with owners, priority, and due dates.",
+  "author": "promptg-team",
+  "tags": [
+    "sre",
+    "postmortem",
+    "follow-ups"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "sre-followups-and-owners",
+    "displayName": "Follow-ups & Owners",
+    "description": "Turn learnings into follow-ups with owners, priority, and due dates.",
+    "author": "promptg-team",
+    "tags": [
+      "sre",
+      "postmortem",
+      "follow-ups"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Follow-ups, Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Follow-ups <= 12 bullets; Notes <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are an SRE turning learnings into operational follow-ups.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Learnings/context (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nProduce follow-ups where each bullet includes: Priority (P0/P1/P2), Owner (name/role/team), Due date (or 'TBD'), and Success criteria (how we know it's done).",
+    "defaults": {
+      "goal": "Turn learnings into follow-ups with owners, priority, and due dates.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., only top 5, only preventative work). It cannot add output sections."
+      }
+    }
+  }
+}

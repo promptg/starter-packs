@@ -1,0 +1,38 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "sre-timeline-from-logs",
+  "displayName": "Timeline From Logs",
+  "description": "Build a timeline from logs/events and highlight gaps and hypotheses.",
+  "author": "promptg-team",
+  "tags": [
+    "sre",
+    "incident",
+    "timeline"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "sre-timeline-from-logs",
+    "displayName": "Timeline From Logs",
+    "description": "Build a timeline from logs/events and highlight gaps and hypotheses.",
+    "author": "promptg-team",
+    "tags": [
+      "sre",
+      "incident",
+      "timeline"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Timeline, Gaps, Hypotheses, Next Checks, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 3 bullets; Timeline <= 12 bullets; Gaps <= 8 bullets; Hypotheses <= 6 bullets; Next Checks <= 8 bullets; Questions <= 6 bullets\n\nRole:\nYou are an SRE building an incident timeline from noisy signals.\n\nInputs:\n- Goal: {{goal}}\n- System/domain (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Logs/events/notes (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nExtract an ordered timeline with timestamps if available. Call out gaps in the data and propose plausible hypotheses. Recommend the next checks that would most quickly confirm or falsify the hypotheses.",
+    "defaults": {
+      "goal": "Build a timeline from logs/events and highlight gaps and hypotheses.",
+      "constraints": "None.",
+      "language": "Unspecified"
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., last 60 minutes only, only customer-impacting events). It cannot add output sections."
+      }
+    }
+  }
+}

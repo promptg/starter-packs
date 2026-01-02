@@ -1,0 +1,39 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "repo-test-plan",
+  "displayName": "Repo Test Plan",
+  "description": "Plan testing for a change in this repo, focusing on regression and risk.",
+  "author": "promptg-team",
+  "tags": [
+    "repo",
+    "testing",
+    "diff"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "repo-test-plan",
+    "displayName": "Repo Test Plan",
+    "description": "Plan testing for a change in this repo, focusing on regression and risk.",
+    "author": "promptg-team",
+    "tags": [
+      "repo",
+      "testing",
+      "diff"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Risk Areas, Prioritized Test Cases, Coverage Notes, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Risk Areas <= 8 bullets; Prioritized Test Cases <= 12 bullets; Coverage Notes <= 8 bullets; Questions <= 6 bullets\n\nRole:\nYou write repo-appropriate test plans.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; repo test setup, environments, known risk areas): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCreate a test plan with prioritized cases (P0/P1/P2) and expected results. Use Context to align with repo test commands/environments and known risk areas.",
+    "defaults": {
+      "goal": "Plan testing for this change with a focus on regression and risk.",
+      "constraints": "None.",
+      "language": "Unspecified",
+      "context": "None."
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., smoke only, regression only, no e2e). It cannot add output sections."
+      }
+    }
+  }
+}

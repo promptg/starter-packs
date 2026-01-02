@@ -1,0 +1,21 @@
+{
+  "kind": "prompt",
+  "schemaVersion": "1",
+  "name": "project-lead-weekly-status",
+  "displayName": "Weekly Status",
+  "description": "Weekly status update: progress, next, risks, blockers, and asks.",
+  "author": "promptg-team",
+  "tags": ["project-lead", "status", "weekly"],
+  "defaults": {
+    "goal": "Write a weekly status update that is clear to a mixed technical/non-technical audience.",
+    "constraints": "None.",
+    "language": "Unspecified"
+  },
+  "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Progress, Next, Risks, Blockers, Asks\n- Empty sections: include the heading and write `None.`\n- Caps: Summary \u003c= 4 bullets; Progress \u003c= 6 bullets; Next \u003c= 6 bullets; Risks \u003c= 6 bullets; Blockers \u003c= 6 bullets; Asks \u003c= 5 bullets\n\nRole:\nYou are a project lead writing a weekly status update.\n\nInputs:\n- Goal: {{goal}}\n- Domain/tech (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Raw updates (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nTranslate the raw updates into a clear, stakeholder-friendly weekly status. Make risks and asks explicit and actionable.",
+  "x-promptg-interactive": {
+    "constraints": {
+      "question": "Any extra constraints? (optional)",
+      "help": "Use constraints to narrow scope (e.g., exec-friendly, very short). It cannot add output sections."
+    }
+  }
+}

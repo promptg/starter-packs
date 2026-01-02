@@ -1,0 +1,39 @@
+{
+  "kind": "template",
+  "schemaVersion": "1",
+  "name": "senior-performance-quickscan",
+  "displayName": "Performance Quickscan",
+  "description": "Spot performance risks and suggest what to measure and optimize.",
+  "author": "promptg-team",
+  "tags": [
+    "senior",
+    "performance",
+    "diff"
+  ],
+  "prompt": {
+    "kind": "prompt",
+    "schemaVersion": "1",
+    "name": "senior-performance-quickscan",
+    "displayName": "Performance Quickscan",
+    "description": "Spot performance risks and suggest what to measure and optimize.",
+    "author": "promptg-team",
+    "tags": [
+      "senior",
+      "performance",
+      "diff"
+    ],
+    "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Likely Hotspots, Measurement Plan, Optimizations, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Likely Hotspots <= 8 bullets; Measurement Plan <= 8 bullets; Optimizations <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are a senior engineer scanning for performance regressions.\n\nInputs:\n- Goal: {{goal}}\n- Language/stack: {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Diff (required): {{diff}}\n- Context (optional; workloads, latency budgets, perf goals): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nIdentify likely performance hotspots (CPU/memory/IO/DB/network) introduced or made worse by the diff. Suggest a concrete measurement plan and targeted optimizations.",
+    "defaults": {
+      "goal": "Spot performance risks and suggest what to measure and optimize.",
+      "constraints": "None.",
+      "language": "Unspecified",
+      "context": "None."
+    },
+    "x-promptg-interactive": {
+      "constraints": {
+        "question": "Any extra constraints? (optional)",
+        "help": "Use constraints to narrow scope (e.g., DB-only, memory-only, suggest measurement only). It cannot add output sections."
+      }
+    }
+  }
+}
