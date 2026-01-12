@@ -53,14 +53,14 @@ promptg template show <template-name>
 
 **Getting started**
 
-- Quickstart: https://github.com/promptg/cli/blob/main/docs/QUICKSTART.md
+- Quickstart: https://github.com/promptg/cli#quickstart-60-seconds
 - CLI reference: https://github.com/promptg/cli/blob/main/docs/CLI.md
 
 **Understand asset types**
 
-- Prompts (instances): https://github.com/promptg/cli/blob/main/docs/PROMPTS.md
-- Templates (blueprints): https://github.com/promptg/cli/blob/main/docs/TEMPLATES.md
-- Packs (distribution): https://github.com/promptg/cli/blob/main/docs/PACKS.md
+- Prompts (instances): https://github.com/promptg/spec/blob/main/spec/promptg-spec.md#2-core-concepts-and-rationale-informative
+- Templates (blueprints): https://github.com/promptg/spec/blob/main/spec/promptg-spec.md#2-core-concepts-and-rationale-informative
+- Packs (distribution): https://github.com/promptg/spec/blob/main/spec/promptg-spec.md#2-core-concepts-and-rationale-informative
 
 ## Repo Layout
 
