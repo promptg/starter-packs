@@ -5,10 +5,7 @@
   "displayName": "Risk Register",
   "description": "Risk register with likelihood, impact, mitigation, owner, and due date.",
   "author": "promptg-team",
-  "tags": [
-    "project-lead",
-    "risk"
-  ],
+  "tags": ["project-lead", "risk"],
   "prompt": {
     "kind": "prompt",
     "schemaVersion": "1",
@@ -16,10 +13,7 @@
     "displayName": "Risk Register",
     "description": "Risk register with likelihood, impact, mitigation, owner, and due date.",
     "author": "promptg-team",
-    "tags": [
-      "project-lead",
-      "risk"
-    ],
+    "tags": ["project-lead", "risk"],
     "content": "Output contract (follow exactly):\n- Format: plain text (Markdown-friendly)\n- Sections (in order; no extra sections): Summary, Risk Register, Next Steps, Questions\n- Empty sections: include the heading and write `None.`\n- Caps: Summary <= 4 bullets; Risk Register <= 10 bullets; Next Steps <= 6 bullets; Questions <= 6 bullets\n\nRole:\nYou are a project lead maintaining a risk register.\n\nInputs:\n- Goal: {{goal}}\n- Domain/tech (optional): {{language}}\n- Constraints (optional; narrowing only): {{constraints}}\n- Project context / current risks (required): {{context}}\n\nConstraints policy:\n- {{constraints}} may only narrow scope or tighten caps.\n- If {{constraints}} conflicts with the Output contract, ignore the conflicting part.\n\nTask:\nCreate a risk register. Each risk bullet must include: Likelihood (Low/Med/High), Impact (Low/Med/High), Mitigation, Owner (role/team if unknown), and Due date (or 'TBD').",
     "defaults": {
       "goal": "Create or update a practical project risk register with owners and due dates.",
