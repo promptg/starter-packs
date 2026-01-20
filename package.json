@@ -1,14 +1,66 @@
 {
-  "name": "promptg-starter-packs",
-  "private": true,
+  "name": "@promptg/starter-packs",
+  "version": "1.0.1",
+  "description": "Curated PromptG starter packs (templates + prompts) to install with @promptg/cli.",
+  "license": "Apache-2.0",
+  "author": "Steve Papa <steve@promptg.io>",
+  "type": "module",
+  "engines": {
+    "node": ">=20.12.0"
+  },
   "scripts": {
     "validate": "node validate-assets.cjs",
     "format": "prettier --write \"**/*.{json,md}\"",
-    "format:check": "prettier --check \"**/*.{json,md}\""
+    "format:check": "prettier --check \"**/*.{json,md}\"",
+    "prepack": "npm run format:check && npm run validate"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/promptg/starter-packs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/promptg/starter-packs/issues"
+  },
+  "homepage": "https://promptg.io",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "promptg",
+    "starter-packs",
+    "prompts",
+    "prompt-template",
+    "prompt-templates",
+    "prompt-pack",
+    "prompt-packs",
+    "prompts-as-code",
+    "prompt-engineering",
+    "prompt-management",
+    "llm",
+    "ai",
+    "generative-ai",
+    "genai",
+    "openai",
+    "chatgpt",
+    "anthropic",
+    "claude",
+    "gemini",
+    "ollama",
+    "rag",
+    "agents",
+    "mcp",
+    "cli"
+  ],
   "devDependencies": {
     "ajv": "8.12.0",
     "ajv-formats": "3.0.1",
     "prettier": "^3.7.4"
-  }
+  },
+  "files": [
+    "packs/",
+    "prompts/",
+    "templates/",
+    "README.md",
+    "LICENSE"
+  ]
 }
