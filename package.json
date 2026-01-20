@@ -1,6 +1,6 @@
 {
   "name": "@promptg/starter-packs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Curated PromptG starter packs (templates + prompts) to install with @promptg/cli.",
   "license": "Apache-2.0",
   "author": "Steve Papa <steve@promptg.io>",
